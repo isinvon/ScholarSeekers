@@ -1,19 +1,25 @@
 <template>
   <el-menu
-    :default-active="activeIndex"
-    class="el-menu-demo"
-    mode="horizontal"
-    :ellipsis="false"
-    @select="handleSelect"
+      :default-active="activeIndex"
+      class="el-menu-demo"
+      mode="horizontal"
+      :ellipsis="false"
+      @select="handleSelect"
   >
     <el-menu-item index="0">
       <img
-        style="width: auto; height: 30px"
-        :src="LogoUrl"
-        alt="Element logo"
+          style="width: auto; height: 30px"
+          :src="LogoUrl"
+          alt="Element logo"
       />
     </el-menu-item>
-    <div class="flex-grow" />
+
+    <div class="flex-grow"/>
+    <!--校园新闻热榜-->
+    <div style="margin-right: 10px;margin-top: 12px">
+      <CampusNewsRightDrawer/>
+    </div>
+    
     <el-menu-item v-for="item in headerMenu" :key="item.title" :index="item.id">
       <router-link :to="`${item.path}`">
         {{ item.title }}
@@ -47,10 +53,12 @@
 </template>
 
 <script lang="js" setup>
+import './index.less'
 import {ref, defineOptions} from 'vue'
 // Logo
 import LogoUrl from '@/assets/logo.png'
 import {headerMenu} from "@/menuData/headerMenu";
+import CampusNewsRightDrawer from '@/components/Drawer/CampusNewsRightDrawer'
 
 defineOptions({
   name: 'HeaderMenu'
@@ -62,8 +70,6 @@ const handleSelect = (key, keyPath) => {
 }
 </script>
 
-<style lang="scss" scoped>
-.flex-grow {
-  flex-grow: 1;
-}
+<style lang="less" scoped>
+
 </style>
