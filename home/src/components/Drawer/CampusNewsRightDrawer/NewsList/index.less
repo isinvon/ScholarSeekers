@@ -1,0 +1,45 @@
+@border-radius: 10px;
+
+.infinite-list {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.infinite-list .infinite-list-item {
+  display: flex;
+  //gap: 10px; // 子元素之间的间距
+  align-items: center;
+  justify-content: flex-start;
+  height: 50px;
+  background: var(--el-color-primary-light-9);
+  margin: 10px;
+  color: var(--el-color-primary);
+  border-radius: @border-radius;
+}
+
+.infinite-list .infinite-list-item + .list-item {
+  margin-top: 10px;
+}
+
+//新闻序号
+.news-index {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+//新闻标题
+.news-title {
+}
+
+//新闻图像
+.news-img {
+  width: 30px;
+  height: 30px;
+  border-radius: @border-radius;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
