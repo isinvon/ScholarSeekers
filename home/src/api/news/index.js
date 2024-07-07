@@ -1,5 +1,5 @@
 // 新闻API
-import request from "@/utils/request";
+import request from "@/utils/Request";
 
 class News {
     static async getNewsById(id) {
