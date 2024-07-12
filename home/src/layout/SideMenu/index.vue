@@ -1,7 +1,8 @@
 <template>
   <el-row class="tac">
-    <el-col :span="12">
-      <h4 class="mb-2" style="color: #207585">Glut失物招领</h4>
+    <!--调整占据的空间为24/24-->
+    <el-col :span="24">
+      <h3 class="mb-2" style="color: #207585">Glut失物招领</h3>
       <el-menu
           default-active="2"
           class="el-menu-vertical-demo"
@@ -23,22 +24,16 @@
 </template>
 
 <script lang="js" setup>
+import './index.less'
 import {sideMenu} from "@/menuData/sideMenu";
 
 const handleOpen = (key, keyPath) => {
-  console.log(key, keyPath)
+  // console.log(key, keyPath)
 }
 const handleClose = (key, keyPath) => {
-  console.log(key, keyPath)
+  // console.log(key, keyPath)
 }
 </script>
 
-<style lang="scss" scoped>
-.el-row {
-  // width: 200%;
-}
-
-.el-col {
-  display: inline-table;
-}
+<style lang="less" scoped>
 </style>

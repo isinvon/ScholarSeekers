@@ -7,13 +7,13 @@
   <el-drawer v-model="drawer" title="I am the title" :with-header="false">
     <el-divider>今日热点</el-divider>
     <!--新闻无限列表-->
-    <NewsList :news-list="newsList" />
+    <NewsList :news-list="newsList"/>
   </el-drawer>
 </template>
 
 <script lang="js" setup>
 import './index.less'
-import {ref,onMounted} from 'vue'
+import {ref, onMounted} from 'vue'
 // 新闻列表组件
 import NewsList from './NewsList'
 // 新闻API对象
