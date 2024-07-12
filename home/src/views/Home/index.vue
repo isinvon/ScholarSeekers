@@ -1,9 +1,4 @@
 <template>
-  <el-divider>失物招领统计报表</el-divider>
-  <div class="home-container">
-    <div class="chart-container">
-      <div ref="chartRef" class="chart"></div>
-    </div>
   <div class="container">
     <!--第一行-->
     <el-row :gutter="15">
@@ -45,10 +40,6 @@
 </template>
 
 <script setup>
-import * as echarts from 'echarts';
-import { onMounted, ref } from 'vue';
-
-const chartRef = ref(null);
 import './index.less'
 // 柱状图
 import BarChart from '@/components/Echart/BarChart'
