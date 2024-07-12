@@ -1,25 +1,21 @@
 import Mock from 'mockjs';
-// 模拟getNewsList接口_不加分页
-// Mock.mock('/news/getNewsList','get',()=>{
-//     return {
-//         code: 200,
-//         data: [
-//             {id: 1, title: 'News 1', link: 'https://www.baidu.com', img: 'https://picsum.photos/200/200'},
-//             {id: 2, title: 'News 2', link: 'https://www.bing.com', img: 'https://picsum.photos/200/200'},
-//             {id: 3, title: 'News 3', link: 'https://www.google.com', img: 'https://picsum.photos/200/200'},
-//         ]
-//     }
-// })
+const apiPrefix = process.env.VUE_APP_BASE_API;
 
-// 模拟getNewsList接口+分页
-Mock.mock('/news/getNewsList', 'get', (options) => {
+// 获取新闻列表 接口+分页
+Mock.mock(apiPrefix + '/news/getNewsList', 'get', (options) => {
     const { pageNum, pageSize } = options.body || {};
-    let data = [
-        {id: 1, title: 'News 1', link: 'https://www.baidu.com', img: 'https://picsum.photos/200/200'},
-        {id: 2, title: 'News 2', link: 'https://www.bing.com', img: 'https://picsum.photos/200/200'},
-        {id: 3, title: 'News 3', link: 'https://www.bing.com', img: 'https://picsum.photos/200/200'},
-    ];
-
+    let data = [];
+    // 循环40次
+    for (let i = 0; i < 40; i++) {
+        data.push({
+            id: Mock.Random.guid(),
+            title: Mock.Random.ctitle(),
+            // link: Mock.Random.url(),
+            link: `https://www.baidu.com/s?wd=${i + 1}`,
+            // img: `https://picsum.photos/200/200?random=${i + 4}`,
+            img: Mock.Random.image('200x200',Mock.Random.color(),Mock.Random.cword(5, 10), ),
+        });
+    }
     // 假设每页显示10条记录，如果pageNum和pageSize存在，则根据它们来切分数据
     if (pageNum && pageSize) {
         const start = (pageNum - 1) * pageSize;
@@ -29,12 +25,13 @@ Mock.mock('/news/getNewsList', 'get', (options) => {
 
     return {
         code: 200,
+        msg: 'success',
         data: data,
     };
 });
 
-// 模拟getNewsById接口
-Mock.mock(/\/news\/getNewsById\?id=\d+/, 'get', (options) => {
+// 通过id获取新闻
+Mock.mock(apiPrefix + /\/news\/getNewsById\?id=\d+/, 'get', (options) => {
     const newsId = options.url.match(/id=(\d+)/)[1];
     const data = [
         {id: 1, title: 'News 1', link: 'https://www.baidu.com', img: 'https://picsum.photos/200/200'},
@@ -46,6 +43,7 @@ Mock.mock(/\/news\/getNewsById\?id=\d+/, 'get', (options) => {
     const newsItem = data.find(item => item.id === parseInt(newsId));
     return {
         code: 200,
+        msg: 'success',
         data: newsItem || {},
     };
 });
