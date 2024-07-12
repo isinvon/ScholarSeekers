@@ -14,6 +14,8 @@
       </el-col>
       <el-col :span="8">
         <div class="grid-content ep-bg-purple"/>
+        <!--柱状图-->
+        <BarChart id="barChart" class="home-element bar-chart" style="height: 250px;width: 300px;"/>
       </el-col>
     </el-row>
     <!--第二行-->
@@ -48,6 +50,8 @@ import { onMounted, ref } from 'vue';
 
 const chartRef = ref(null);
 import './index.less'
+// 柱状图
+import BarChart from '@/components/Echart/BarChart'
 // 轮播图
 import Carousel from './components/Carousel'
 // 最近事件
