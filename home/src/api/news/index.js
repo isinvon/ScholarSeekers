@@ -2,31 +2,15 @@
 import request from "@/utils/Request";
 
 class News {
-    static async getNewsById(id) {
-        try {
-            const response = await request({
-                url: "/news/getNewsById",
-                method: "get",
-                params: {
-                    id: id
-                }
-            })
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
+    getNewsById(id) {
+        return request.get("/news/getNewsById", {
+            params: {
+                id: id
+            }
+        })
     }
-    static async getNewsList() {
-        try {
-            const response = await request({
-                url: "/news/getNewsList",
-                method: "get",
-            })
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
+    getNewsList() {
+        return request.get("/news/getNewsList")
     }
 }
-
-export default News;
+export default new News();
