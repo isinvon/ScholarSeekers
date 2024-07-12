@@ -9,6 +9,8 @@
     <el-row :gutter="15">
       <el-col :span="16">
         <div class="grid-content ep-bg-purple"/>
+        <!-- 轮播图 -->
+        <Carousel class="home-element carousel" :carouse-list="carouseList"/>
       </el-col>
       <el-col :span="8">
         <div class="grid-content ep-bg-purple"/>
@@ -46,61 +48,20 @@ import { onMounted, ref } from 'vue';
 
 const chartRef = ref(null);
 import './index.less'
+// 轮播图
+import Carousel from './components/Carousel'
 // 最近事件
 import RecentEvent from './components/RecentEvent'
 import Home from "@/api/home";
 import {onMounted, ref} from "vue";
 
-// 模拟数据
-const imitateDate = [
-  { category: '手机', count: 35 },
-  { category: '钱包', count: 20 },
-  { category: '钥匙', count: 15 },
-  { category: '书籍', count: 25 },
-];
+const carouseList = ref([])
 
-onMounted(() => {
-  const chartInstance = echarts.init(chartRef.value);
-  const option = {
-    tooltip: {
-      trigger: 'item',
-    },
-    legend: {
-      top: '5%',
-      left: 'center',
-    },
-    series: [
-      {
-        name: '失物类别',
-        type: 'pie',
-        radius: ['40%', '70%'],
-        avoidLabelOverlap: false,
-        itemStyle: {
-          borderRadius: 10,
-          borderColor: '#fff',
-          borderWidth: 2,
-        },
-        label: {
-          show: false,
-          position: 'center',
-        },
-        emphasis: {
-          label: {
-            show: true,
-            fontSize: '30',
-            fontWeight: 'bold',
-          },
-        },
-        data: imitateDate.map(item => ({ value: item.count, name: item.category })),
-      },
-    ],
-  };
-
-  chartInstance.setOption(option);
-  window.addEventListener('resize', () => {
-    chartInstance.resize();
-  });
-});
+onMounted(
+    async () => {
+      carouseList.value = await Home.getCarouselList()
+    }
+)
 </script>
 
 <style lang="less" scoped>
