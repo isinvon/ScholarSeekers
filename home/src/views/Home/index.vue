@@ -18,6 +18,8 @@
     <el-row :gutter="15">
       <el-col :span="16">
         <div class="grid-content ep-bg-purple"/>
+        <!-- 最近事件 -->
+        <RecentEvent class="home-element recent-event"/>
       </el-col>
       <el-col :span="8">
         <div class="grid-content ep-bg-purple"/>
@@ -44,6 +46,8 @@ import { onMounted, ref } from 'vue';
 
 const chartRef = ref(null);
 import './index.less'
+// 最近事件
+import RecentEvent from './components/RecentEvent'
 import Home from "@/api/home";
 import {onMounted, ref} from "vue";
 
