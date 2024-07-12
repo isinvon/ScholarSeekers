@@ -19,7 +19,7 @@ if (process.env.NODE_ENV === "development") {
     try {
         // 导入mock
         const Mock = require("mockjs");
-        require("./mock/index.js");
+        require("../mock/index.js");
         Mock.setup({
             timeout: "200-600",
         });
