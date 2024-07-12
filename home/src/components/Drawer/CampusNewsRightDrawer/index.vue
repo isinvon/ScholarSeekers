@@ -23,11 +23,6 @@ const drawer = ref(false)
 const newsList = ref([])
 // 获取新闻列表并赋值
 onMounted(async () => {
-  try {
-    const response = await News.getNewsList()
-    newsList.value = response
-  }catch (e) {
-    console.log('获取新闻列表失败: ',e)
-  }
+  newsList.value = await News.getNewsList()
 })
 </script>
