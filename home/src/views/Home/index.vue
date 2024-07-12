@@ -4,6 +4,37 @@
     <div class="chart-container">
       <div ref="chartRef" class="chart"></div>
     </div>
+  <div class="container">
+    <!--第一行-->
+    <el-row :gutter="15">
+      <el-col :span="16">
+        <div class="grid-content ep-bg-purple"/>
+      </el-col>
+      <el-col :span="8">
+        <div class="grid-content ep-bg-purple"/>
+      </el-col>
+    </el-row>
+    <!--第二行-->
+    <el-row :gutter="15">
+      <el-col :span="16">
+        <div class="grid-content ep-bg-purple"/>
+      </el-col>
+      <el-col :span="8">
+        <div class="grid-content ep-bg-purple"/>
+      </el-col>
+    </el-row>
+    <!--第三行-->
+    <el-row :gutter="15">
+      <el-col :span="4">
+        <div class="grid-content ep-bg-purple"/>
+      </el-col>
+      <el-col :span="16">
+        <div class="grid-content ep-bg-purple"/>
+      </el-col>
+      <el-col :span="4">
+        <div class="grid-content ep-bg-purple"/>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -12,6 +43,9 @@ import * as echarts from 'echarts';
 import { onMounted, ref } from 'vue';
 
 const chartRef = ref(null);
+import './index.less'
+import Home from "@/api/home";
+import {onMounted, ref} from "vue";
 
 // 模拟数据
 const imitateDate = [
@@ -65,24 +99,6 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
-.home-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  padding: 20px;
-}
+<style lang="less" scoped>
 
-.chart-container {
-  width: 80%;
-  max-width: 800px;
-  margin-top: 30px;
-}
-
-.chart {
-  width: 100%;
-  height: 400px;
-}
 </style>
