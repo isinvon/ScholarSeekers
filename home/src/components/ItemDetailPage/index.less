@@ -1,0 +1,50 @@
+// .item-detail-page让其内部元素垂直居中
+.item-detail-page {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; // 方向垂直居中 (从大布局变为小卡片)
+  justify-content: center;
+  // 卡片头部
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h3 {
+      margin: 0;
+    }
+  }
+
+  // 卡片中部
+  .card-default {
+    display: flex;
+    gap: 20px;
+    // 图片的样式
+    .image-slot {
+      width: 100%;
+      height: 100%;
+      border-radius: 10%;
+    }
+
+    .el-row {
+      // 间隔
+      border-radius: 5px;
+    }
+    // 表格描述
+    .card-descriptions{
+
+    }
+  }
+
+  // 卡片底部
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h3 {
+      margin: 0;
+    }
+  }
+}
