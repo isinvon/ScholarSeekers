@@ -4,6 +4,12 @@ class RouteUtils {
     static goBackToPreviousPage() {
         window.history.back();
     }
+
+    // 跳转到物品详情页(新标签)
+    static goToItemDetailPage(id) {
+        window.open(`/item/${id}`, "_blank");
+    }
+
     // 跳转到首页
     static goToHomePage() {
         window.location.href = '/home';
