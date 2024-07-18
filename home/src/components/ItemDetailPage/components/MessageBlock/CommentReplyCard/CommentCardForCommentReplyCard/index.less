@@ -1,0 +1,55 @@
+@border-radius: 10px;
+@border-color: #ebeef5;
+@margin-top: 8px;
+.comment-card {
+  border: 1px solid #ebeef5;
+  border-radius: 4px;
+  padding: 16px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #606266;
+  background-color: #fff;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
+  // 卡片头部
+  .comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #606266;
+    font-weight: bold;
+
+    //line-height: 1;// 1行高
+    .comment-author-info {
+      margin-left: 8px;
+
+      .author-name {
+        font-weight: bold;
+        margin-right: 8px;
+      }
+    }
+  }
+
+  // 卡片中部
+  .comment-default {
+    // 评论内容
+    .comment-content {
+      justify-self: flex-start;
+    }
+
+    // 评论图片
+    .comment-images {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: @margin-top;
+      border-radius: @border-radius;
+    }
+  }
+}
+
+.comment-reply {
+  margin-top: 15px;
+}
