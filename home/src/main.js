@@ -7,6 +7,9 @@ import "element-plus/dist/index.css";
 // 全局样式
 import "./style/index.less";
 import * as echarts from "echarts";
+import {createPinia} from "pinia";
+const pinia = createPinia();
+
 import {solveChangeSizeCausedProblem} from "@/utils/SolveChangeSizeCausedProblem";
 
 console.log(`\x1b[32m🟢🟢🟢当前版本是：${process.env.VUE_APP_VERSION}🟢🟢🟢\x1b[0m`);
@@ -38,6 +41,6 @@ const app = createApp(App);
 // 挂载echarts
 app.config.globalProperties.$echart = echarts;
 
-app.use(store).use(router).use(ElementPlus).mount("#app");
+app.use(store).use(router).use(ElementPlus).use(pinia).mount("#app");
 
 solveChangeSizeCausedProblem();
