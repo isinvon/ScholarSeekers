@@ -9,12 +9,5 @@ export const latestLostRoute = [
             // icon: 'el-icon-s-order',
             // roles: ['admin', 'editor']
         },
-        children: [
-            {
-                path: "/latestLost/item/:id",
-                name: "item",
-                component: () => import("@/components/ItemCard"),
-            },
-        ],
     }
 ]
