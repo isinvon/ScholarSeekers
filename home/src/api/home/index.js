@@ -7,6 +7,7 @@ class Home {
 
     init() {
     }
+
     /**
      * 获取轮播图
      * @returns {Promise}
