@@ -1,4 +1,6 @@
 // url工具类
+import router from "@/router";
+
 class RouteUtils {
     // 返回上一个页面
     static goBackToPreviousPage() {
@@ -30,6 +32,14 @@ class RouteUtils {
     // 清除路由历史
     static clearHistory() {
         window.history.replaceState(null, null, window.location.href);
+    }
+
+    //跳转到指定路由
+    static goToRoute(routeName, params) {
+        router.push({
+            name: routeName,
+            params: params
+        });
     }
 }
 
