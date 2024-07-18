@@ -13,7 +13,7 @@
 </template>
 
 <script lang="js" setup>
-import './index.less'
+
 import UrlUtils from '@/utils/UrlUtils'
 
 const props = defineProps({
@@ -24,3 +24,8 @@ const props = defineProps({
 })
 
 </script>
+
+<style scoped>
+@import url('./index.less');
+
+</style>

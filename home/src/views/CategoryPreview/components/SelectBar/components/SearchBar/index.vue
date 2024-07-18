@@ -30,3 +30,7 @@ const props = defineProps({
 
 const input = ref('')
 </script>
+
+<style scoped>
+
+</style>

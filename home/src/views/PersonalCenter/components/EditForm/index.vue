@@ -68,7 +68,7 @@
 </template>
 
 <script lang="js" setup>
-import './index.less'
+
 import { reactive } from 'vue'
 
 // do not use same name with ref
@@ -89,5 +89,6 @@ const onSubmit = () => {
 </script>
 
 <style lang="scss" scoped>
+@import url('./index.less');
 
 </style>

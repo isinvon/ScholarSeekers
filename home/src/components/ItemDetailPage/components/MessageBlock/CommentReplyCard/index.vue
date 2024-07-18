@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import './index.less'
+
 import CommentCardForCommentReplyCard from './CommentCardForCommentReplyCard';
 
 defineOptions({
@@ -20,5 +20,6 @@ console.log("我是comment-reply-card里的reply:", reply)
 </script>
 
 <style scoped>
+@import url('./index.less');
 
 </style>

@@ -12,7 +12,7 @@
 </template>
 
 <script lang="js" setup>
-import './index.less'
+
 
 const tableRowClassName =
     ({
@@ -52,6 +52,7 @@ const tableData = [
 </script>
 
 <style>
+@import url('./index.less');
 .el-table .warning-row {
   --el-table-tr-bg-color: var(--el-color-warning-light-9);
 }

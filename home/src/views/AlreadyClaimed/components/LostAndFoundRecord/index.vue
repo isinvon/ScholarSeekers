@@ -8,7 +8,7 @@
 </template>
 
 <script lang="js" setup>
-import './index.less'
+
 
 const tableData = [
   {
@@ -48,3 +48,8 @@ const tableData = [
   },
 ]
 </script>
+
+<style scoped>
+@import url('./index.less');
+
+</style>

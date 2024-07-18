@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import './index.less';
+;
 import CommentCard from '../CommentCard';
 import {computed, ref} from "vue";
 
@@ -34,5 +34,6 @@ const paginatedComments = computed(() => {
 </script>
 
 <style scoped>
+@import url('./index.less');
 
 </style>

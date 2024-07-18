@@ -12,14 +12,15 @@
 
 <script lang="js" setup>
 import {ref} from 'vue'
+
 defineOptions({
   name: 'BorderRadiusComponent',
 })
 const radiusGroup = ref(
-  {
-    name: 'Round Radius',
-    type: 'round',
-  },
+    {
+      name: 'Round Radius',
+      type: 'round',
+    },
 )
 // const radiusGroup = ref([
 //   // {
@@ -49,6 +50,7 @@ const getValue = (type) => {
 }
 </script>
 <style scoped>
+@import url('./index.less');
 .demo-radius .title {
   color: var(--el-text-color-regular);
   font-size: 18px;

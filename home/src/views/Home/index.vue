@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import './index.less'
+
 // 柱状图
 import BarChart from '@/components/Echart/BarChart'
 // 轮播图
@@ -66,5 +66,6 @@ onMounted(
 </script>
 
 <style lang="less" scoped>
+@import url('./index.less');
 
 </style>

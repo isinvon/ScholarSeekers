@@ -79,7 +79,7 @@
 </template>
 
 <script setup>
-import './index.less';
+;
 import {onMounted, ref} from 'vue';
 import {Picture as IconPicture} from '@element-plus/icons-vue'
 import ImageLoadingFailed from "./components/ImageLoadingFailed";
@@ -137,5 +137,6 @@ onMounted(async () => {
 </script>
 
 <style lang="less" scoped>
+@import url('./index.less');
 
 </style>

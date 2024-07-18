@@ -61,7 +61,7 @@
 </template>
 
 <script setup>
-import './index.less'
+
 import ReplyForm from '../../ReplyForm';
 import {ref} from 'vue';
 // import CommentReplyCard from "../../CommentReplyCard";
@@ -125,5 +125,6 @@ const dislikeComment = () => {
 </script>
 
 <style scoped>
+@import url('./index.less');
 
 </style>

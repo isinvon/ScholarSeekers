@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import './index.less'
+
 import PersonalForm from './components/PersonalForm';
 import LostAndFoundRecord from "./components/LostAndFoundRecord";
 import {useRouter} from 'vue-router';
@@ -54,5 +54,6 @@ const returnToProfile = () => {
 
 
 <style lang="less" scoped>
+@import url('./index.less');
 
 </style>

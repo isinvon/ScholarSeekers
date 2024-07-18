@@ -25,22 +25,24 @@
 <!--};-->
 <!--</script>-->
 
-<!--<style scoped>-->
+<!--<style scoped>
+@import url('./index.less');-->
 <!--/* 样式 */-->
 <!--</style>-->
 <template>
   <el-pagination
-    background
-    layout="prev, pager, next"
-    :total="total"
-    :page-size="pageSize"
-    :current-page="currentPage"
-    @current-change="handlePageChange"
+      background
+      layout="prev, pager, next"
+      :total="total"
+      :page-size="pageSize"
+      :current-page="currentPage"
+      @current-change="handlePageChange"
   />
 </template>
 
 <script setup>
-import './index.less'
+
+
 const props = defineProps({
   total: Number,
   pageSize: Number,

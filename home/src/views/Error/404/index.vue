@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import './index.less';
+;
 import {onMounted, ref} from "vue";
 import RemainBox from './components/RemainBox';
 import {notification404PageMenu} from "@/menuData/notificationMenu";
@@ -67,4 +67,5 @@ onMounted(() => {
 </script>
 
 <style lang="less" scoped>
+@import url('./index.less');
 </style>

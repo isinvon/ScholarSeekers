@@ -43,7 +43,7 @@
 
 
 <script lang="js" setup>
-import './index.less'
+
 import {ref} from 'vue'
 import {defineProps} from 'vue';
 
@@ -63,7 +63,8 @@ const {newsList} = defineProps({
 
 </script>
 
-<style>
+<style lang="less" scoped>
+@import url('./index.less');
 
 </style>
 

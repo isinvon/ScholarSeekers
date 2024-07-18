@@ -32,7 +32,8 @@
 <!--};-->
 <!--</script>-->
 
-<!--<style scoped>-->
+<!--<style scoped>
+@import url('./index.less');-->
 <!--/* 样式 */-->
 <!--</style>-->
 
@@ -49,7 +50,7 @@
 </template>
 
 <script setup>
-import './index.less'
+
 
 import {ref} from 'vue';
 

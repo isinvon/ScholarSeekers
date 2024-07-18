@@ -305,7 +305,7 @@
 </template>
 
 <script setup lang="js">
-import './index.less'
+
 import {computed, ref} from 'vue'
 import {
   Iphone,
@@ -372,5 +372,6 @@ const blockMargin = computed(() => {
 </script>
 
 <style lang="less" scoped>
+@import url('./index.less');
 
 </style>

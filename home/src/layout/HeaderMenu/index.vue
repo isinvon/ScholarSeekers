@@ -19,7 +19,7 @@
     <div style="margin-right: 10px;margin-top: 12px">
       <CampusNewsRightDrawer/>
     </div>
-    
+
     <el-menu-item v-for="item in headerMenu" :key="item.title" :index="item.id">
       <router-link :to="`${item.path}`">
         {{ item.title }}
@@ -53,7 +53,7 @@
 </template>
 
 <script lang="js" setup>
-import './index.less'
+
 import {ref, defineOptions} from 'vue'
 // Logo
 import LogoUrl from '@/assets/logo.png'
@@ -71,5 +71,6 @@ const handleSelect = (key, keyPath) => {
 </script>
 
 <style lang="less" scoped>
+@import url('./index.less');
 
 </style>

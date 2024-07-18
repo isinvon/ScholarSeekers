@@ -12,7 +12,6 @@
 </template>
 
 <script lang="js" setup>
-import './index.less'
 import {ref, onMounted} from 'vue'
 // 新闻列表组件
 import NewsList from './NewsList'
@@ -26,3 +25,7 @@ onMounted(async () => {
   newsList.value = await News.getNewsList()
 })
 </script>
+
+<style scoped>
+@import "./index.less";
+</style>

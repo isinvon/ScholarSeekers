@@ -24,7 +24,7 @@
 </template>
 
 <script lang="js" setup>
-import './index.less'
+
 import {sideMenu} from "@/menuData/sideMenu";
 
 const handleOpen = (key, keyPath) => {
@@ -36,4 +36,5 @@ const handleClose = (key, keyPath) => {
 </script>
 
 <style lang="less" scoped>
+@import url('./index.less');
 </style>

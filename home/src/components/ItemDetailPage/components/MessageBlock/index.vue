@@ -46,6 +46,7 @@ const handlePageChange = (val) => {
 </script>
 
 <style scoped>
+@import url('./index.less');
 .message-block {
   display: flex;
   flex-direction: column;

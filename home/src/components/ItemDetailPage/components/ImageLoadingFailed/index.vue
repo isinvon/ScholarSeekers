@@ -1,24 +1,28 @@
 <!--图片加载失败组件-->
 <template>
   <div class="demo-image__error">
-      <el-image>
-        <template #error>
-          <div class="image-slot">
-            <el-icon><icon-picture /></el-icon>
-          </div>
-        </template>
-      </el-image>
+    <el-image>
+      <template #error>
+        <div class="image-slot">
+          <el-icon>
+            <icon-picture/>
+          </el-icon>
+        </div>
+      </template>
+    </el-image>
   </div>
 </template>
 
 <script setup lang="js">
-import { Picture as IconPicture } from '@element-plus/icons-vue'
+import {Picture as IconPicture} from '@element-plus/icons-vue'
+
 defineOptions({
   name: 'ImageLoadingFailed',
 })
 </script>
 
 <style scoped>
+@import url('./index.less');
 .demo-image__error .block {
   padding: 30px 0;
   text-align: center;
@@ -28,12 +32,14 @@ defineOptions({
   box-sizing: border-box;
   vertical-align: top;
 }
+
 .demo-image__error .demonstration {
   display: block;
   color: var(--el-text-color-secondary);
   font-size: 14px;
   margin-bottom: 20px;
 }
+
 .demo-image__error .el-image {
   padding: 0 5px;
   max-width: 300px;
@@ -52,6 +58,7 @@ defineOptions({
   color: var(--el-text-color-secondary);
   font-size: 30px;
 }
+
 .demo-image__error .image-slot .el-icon {
   font-size: 30px;
 }
