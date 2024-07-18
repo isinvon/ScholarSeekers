@@ -15,13 +15,15 @@
     </el-row>
     <!--第二行-->
     <el-row :gutter="15">
-      <el-col :span="16">
+      <el-col :span="12">
         <div class="grid-content ep-bg-purple"/>
         <!-- 最近事件 -->
         <RecentEvent class="home-element recent-event"/>
       </el-col>
-      <el-col :span="8">
+      <el-col :span="12">
         <div class="grid-content ep-bg-purple"/>
+        <!--最近丢失-->
+        <RecentLost class="home-element recent-lost" :table-data="recentLostData"/>
       </el-col>
     </el-row>
     <!--第三行-->
@@ -47,14 +49,18 @@ import BarChart from '@/components/Echart/BarChart'
 import Carousel from './components/Carousel'
 // 最近事件
 import RecentEvent from './components/RecentEvent'
+// 访客统计
+import RecentLost from "./components/RecentLost";
 import Home from "@/api/home";
 import {onMounted, ref} from "vue";
 
 const carouseList = ref([])
+const recentLostData = ref([])
 
 onMounted(
     async () => {
       carouseList.value = await Home.getCarouselList()
+      recentLostData.value = await Home.getRecentLost()
     }
 )
 </script>

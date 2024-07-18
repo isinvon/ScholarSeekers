@@ -17,10 +17,18 @@ class Home {
 
     /**
      * 获取最近事件
-     * @returns {Promise<axios.AxiosResponse<any>>}
+     * @returns {Promise}
      */
     getRecentEvent() {
         return request.get("/home/recentEvent")
+    }
+
+    /**
+     * 最近丢失
+     * @returns {Promise}
+     */
+    getRecentLost() {
+        return request.get("/home/getRecentLost")
     }
 }
 

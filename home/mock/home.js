@@ -20,3 +20,22 @@ Mock.mock(apiPrefix + '/home/getCarouselList', 'get', () => {
         data: data
     }
 })
+
+// 最近丢失RecentLost
+Mock.mock(apiPrefix + '/home/getRecentLost', 'get', () => {
+    let data = []
+    for (let i = 0; i < 20; i++) {
+        data.push({
+            id: Mock.Random.guid(),
+            itemDescription: Mock.Random.ctitle(),
+            itemName: Mock.Random.ctitle(2,5),
+            clickNumber: Mock.Random.integer(1, 100),
+            messageNumber: Mock.Random.integer(1, 2000),
+        })
+    }
+    return {
+        code: 200,
+        msg: 'success',
+        data: data
+    }
+})
