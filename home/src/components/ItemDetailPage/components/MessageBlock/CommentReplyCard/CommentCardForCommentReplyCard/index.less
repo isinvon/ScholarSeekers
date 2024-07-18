@@ -1,6 +1,7 @@
 @border-radius: 10px;
 @border-color: #ebeef5;
 @margin-top: 8px;
+@image-width: 200px;
 .comment-card {
   border: 1px solid #ebeef5;
   border-radius: 4px;
@@ -13,10 +14,13 @@
 
   // 卡片头部
   .comment-header {
+    // 上间隔
+    margin-top: -22px;
+    // 下间隔
+    margin-bottom: -10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
     font-size: 14px;
     color: #606266;
     font-weight: bold;
@@ -36,16 +40,17 @@
   .comment-default {
     // 评论内容
     .comment-content {
-      justify-self: flex-start;
+      text-align: justify;
     }
 
     // 评论图片
     .comment-images {
       display: flex;
-      flex-wrap: wrap;
+      //flex-wrap: wrap;
       gap: 8px;
       margin-top: @margin-top;
       border-radius: @border-radius;
+      width: @image-width;
     }
   }
 }
