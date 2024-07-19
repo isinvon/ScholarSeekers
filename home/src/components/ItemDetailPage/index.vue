@@ -12,9 +12,9 @@
       <!--卡片中部-->
       <template #default>
         <div class="card-default">
-          <el-row>
+          <el-row class="card-default-row" style="display: flex;">
             <!--第一列-->
-            <el-col :span="12">
+            <el-col class="card-default-col" :span="12" style="padding-right: 10px">
               <!--第一列第一行-->
               <el-row>
                 <el-col :span="24">
@@ -33,7 +33,7 @@
                 </el-col>
               </el-row>
               <!--第一列第二行-->
-              <el-row>
+              <el-row style="padding-top: 10px">
                 <el-col :span="24">
                   <el-descriptions class="card-descriptions" :column="1" border>
                     <el-descriptions-item label="物品名称">{{ item.itemName }}</el-descriptions-item>
