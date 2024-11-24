@@ -9,7 +9,7 @@ Mock.mock(apiPrefix + '/news/getNewsList', 'get', (options) => {
     for (let i = 0; i < 40; i++) {
         data.push({
             id: Mock.Random.guid(),
-            title: Mock.Random.ctitle(),
+            title: Mock.Random.ctitle(15),
             // link: Mock.Random.url(),
             link: `https://www.baidu.com/s?wd=${i + 1}`,
             // img: `https://picsum.photos/200/200?random=${i + 4}`,

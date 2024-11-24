@@ -1,9 +1,3 @@
-<script setup>
-import './index.less'
-import HeaderMenu from "@/layout/HeaderMenu/index.vue";
-import SideMenu from "@/layout/SideMenu/index.vue";
-import BackTopButton from "@/components/BackTopButton.vue";
-</script>
 
 <template>
   <div class="common-layout">
@@ -30,7 +24,15 @@ import BackTopButton from "@/components/BackTopButton.vue";
       </el-container>
     </el-container>
   </div>
+
 </template>
+
+<script lang="js" setup>
+import './index.less'
+import HeaderMenu from "@/layout/HeaderMenu/index.vue";
+import SideMenu from "@/layout/SideMenu/index.vue";
+import BackTopButton from "@/components/BackTopButton.vue";
+</script>
 
 <style scoped lang="scss">
 

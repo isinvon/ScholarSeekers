@@ -1,4 +1,5 @@
 <!-- 新闻列表 -->
+
 <template>
   <ul v-infinite-scroll="load" class="infinite-list" style="overflow: auto">
     <li
@@ -6,65 +7,102 @@
         :key="item.id"
         class="infinite-list-item"
     >
-      <!--前三个新闻序号用红色标签-->
-      <span v-if="index === 0 || index === 1|| index === 2" class="news-index">
-          <el-tag type="danger">{{ index + 1 }}</el-tag>
+      <span v-if="index < 3" class="news-index">
+        <el-tag type="danger">{{ index + 1 }}</el-tag>
       </span>
-      <!--其他新闻序号用绿色标签-->
       <span v-else class="news-index">
         <el-tag type="success">{{ index + 1 }}</el-tag>
       </span>
+
       <div class="flex-grow"/>
 
-      <!--新闻标题+链接新标签跳转-->
       <el-text class="w-150px mb-2" size="small" truncated>
-        <el-link type="default" :href="item.link" target="_blank" class="news-title">
-          <!--鼠标移入查看详情(气泡提示)-->
-          <el-popover
-              placement="top"
-              width="200"
-              trigger="hover"
-              :content="item.title"
-          >
+        <el-link type="default" :href="item.link" target="_blank" class="news-title" tabindex="0">
+          <el-popover placement="top" width="200" trigger="hover" :content="item.title">
             <template #reference>
               <el-link type="default" :href="item.link" target="_blank" class="news-title">
-                {{ item.title}}
+                {{ item.title }}
               </el-link>
             </template>
           </el-popover>
         </el-link>
       </el-text>
 
-      <div class="flex-grow"/>
-      <!--<img :src="item.img" :alt="item.title+'图片'" class="news-img">-->
+      <!--<p class="news-info">{{ item.date }} - 来源: {{ item.source }}</p>-->
+      <!--分割线-->
+      <el-divider direction="vertical"/>
+      <img :src="item.img" width="80" height="40" alt="新闻图片" class="news-img"/>
+    </li>
+
+    <li v-if="loading" class="loading-item">
+      <el-spinner size="20" />
+      正在加载...
     </li>
   </ul>
 </template>
 
-
 <script lang="js" setup>
-
-import {ref} from 'vue'
-import {defineProps} from 'vue';
+import { ref } from 'vue'
 
 const count = ref(0)
+const loading = ref(false)
+
 const load = () => {
-  count.value += 2
+  if (loading.value) return
+  loading.value = true
+  setTimeout(() => {
+    count.value += 2
+    loading.value = false
+  }, 500)
 }
 
-const {newsList} = defineProps({
+const { newsList } = defineProps({
   newsList: {
     type: Array,
     required: true,
   }
 })
-
-
-
 </script>
 
 <style lang="less" scoped>
-@import url('./index.less');
 
+
+.infinite-list {
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.infinite-list-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.news-index {
+  margin-right: 10px;
+}
+
+.news-title {
+  font-weight: bold;
+  color: #333;
+  transition: color 0.3s;
+}
+
+.news-title:hover {
+  color: #409eff;
+}
+
+.loading-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  color: #999;
+}
+
+.news-info {
+  font-size: 12px;
+  color: #888;
+}
 </style>
-

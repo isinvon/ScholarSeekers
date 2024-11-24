@@ -1,0 +1,332 @@
+.announcement-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
+}
+
+/* 全局背景渐变 */
+.lost-and-found-container {
+  //padding: 30px; // 全局边距
+  //background: linear-gradient(to right, #cee2ff, #c3cfe2, #a8c6e5, #7ec6e5);
+  border-radius: 12px;
+}
+
+/* 页面标题 */
+.page-title {
+  font-size: 28px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: 600;
+  color: #333;
+  letter-spacing: 1px;
+}
+
+.announcement-search {
+  margin-bottom: 20px;
+}
+
+.announcement-select {
+  margin-bottom: 20px;
+  width: 100px;
+}
+
+/* 卡片样式 */
+.announcement-row {
+  margin-bottom: 20px;
+  transition: transform 0.3s ease;
+}
+
+.announcement-row:hover {
+  transform: scale(1.02);
+}
+
+.announcement-row.highlight {
+  background-color: #e0f7ff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+}
+
+/* 卡片阴影效果 */
+.announcement-card {
+  //min-height: 200px;
+  //max-height: 250px;
+  margin-bottom: 20px;
+  border-radius: 14px;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  //height: 100%; /* 保持卡片的高度一致 */
+}
+
+.announcement-card:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  //transform: scale(1.02); // 放大
+  // 过渡动画
+  transition: transform 0.3s ease;
+  // 向上移动 */
+  transform: translate3d(0, -5px, 0) // 分别为 X、Y、Z 偏移
+}
+
+// 卡片中部位
+.announcement-content {
+  display: flex;
+  //flex-direction: column; // 垂直排列
+  flex-direction: row; // 水平排列
+}
+
+.announcement-image {
+  border-radius: 14px;
+  transition: color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+  // 渐变色 -- 开始 --
+  //color: transparent;
+  //background: linear-gradient(to right, #737373, #27986c);
+  //-webkit-background-clip: text; // 作用是将背景裁剪为文本的形状
+  // 渐变色 -- 结束 --
+  &:hover {
+    color: #409eff; /* 鼠标悬浮时的颜色变化 */
+    transform: scale(1.04); /* 鼠标悬浮时放大 */
+  }
+}
+
+// 内容描述
+.content {
+  margin-left: 10px;
+  flex: 1; // 剩余空间 - 不挤占左边的空间
+}
+
+// 时间
+.announcement-time {
+  color: #999;
+}
+
+/* 标题与标签 */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.title {
+  margin: 0px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #595858;
+  transition: color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+  // 渐变色 -- 开始 --
+  //color: transparent;
+  //background: linear-gradient(to right, #737373, #27986c);
+  //-webkit-background-clip: text; // 作用是将背景裁剪为文本的形状
+  // 渐变色 -- 结束 --
+  &:hover {
+    color: #409eff; /* 鼠标悬浮时的颜色变化 */
+    transform: translateX(5px); /* 鼠标悬浮时轻微位移 */
+  }
+}
+
+
+.el-tag {
+  font-size: 14px;
+  border-radius: 8px;
+  padding: 3px 8px;
+  background-image: linear-gradient(to right, #f3f4f6, #eef2f3);
+}
+
+/* 卡片内容 */
+.content {
+  font-size: 15px;
+  color: #666;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.content.expanded {
+  font-size: 16px;
+  color: #444;
+}
+
+/* 元信息与操作按钮 */
+.meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+
+}
+
+/* 编辑按钮 */
+.edit-btn {
+  background: linear-gradient(45deg, #36d1dc, #5b86e5);
+  color: white;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.edit-btn:hover {
+  background: linear-gradient(45deg, #5b86e5, #36d1dc);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 删除按钮 */
+.delete-btn {
+  background: linear-gradient(45deg, #ff6f61, #ff9472);
+  color: white;
+  border-radius: 8px;
+  margin-left: 10px;
+  transition: all 0.3s ease;
+}
+
+.delete-btn:hover {
+  background: linear-gradient(45deg, #ff9472, #ff6f61);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 卡片展开/收起的动画 */
+.expand-enter-active, .expand-leave-active {
+  transition: all 0.3s ease;
+}
+
+.expand-enter, .expand-leave-to {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.collapse-enter-active, .collapse-leave-active {
+  transition: all 0.3s ease;
+}
+
+.collapse-enter, .collapse-leave-to {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+// 按钮样式
+.el-button {
+  transition: transform 0.2s ease;
+}
+
+.el-button:hover {
+  transform: scale(1.05);
+}
+
+// 分页
+.announcement-pagination {
+  display: flex;
+  justify-content: center;
+}
+
+// 发光环绕 ------------------ 开始 ----------------使用方式：在需要发光的元素前添加此class即可，比如<div class="lightning-button">按钮</div>-----------
+
+.lightning-button {
+  position: relative;
+  overflow: hidden; // 隐藏超出部分
+  z-index: 1;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #333;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.4); /* 增强光晕效果 */
+  }
+
+  /* 添加闪电伪元素 */
+
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border-radius: 12px;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  /* 主闪电效果 - 更复杂的形状 */
+
+  &::before {
+    background: conic-gradient(from 90deg,
+    rgba(147, 229, 180, 0.8) 0%,
+    rgba(218, 218, 10, 0.5) 20%,
+    rgba(31, 105, 68, 0.8) 20%,
+    rgba(144, 225, 37, 0.2) 10%,
+    rgba(90, 166, 197, 0.4) 10%,
+    rgba(195, 123, 224, 0.4) 20%,
+    transparent 100%);
+    animation: lightning-spin 4s linear infinite, lightning-flicker 1s infinite;
+  }
+
+  /* 次闪电效果 - 更细腻的光晕 */
+
+  &::after {
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent 60%);
+    animation: lightning-glow 3s ease-in-out infinite;
+  }
+
+  /* 当悬停时，闪电效果出现 */
+
+  &:hover::before, &:hover::after {
+    opacity: 1;
+  }
+
+  /* 旋转动画，增强流畅感 */
+  @keyframes lightning-spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* 闪电的闪烁效果，增加更自然的闪烁 */
+  @keyframes lightning-flicker {
+    0%, 100% {
+      opacity: 0.6;
+    }
+    20% {
+      opacity: 0.9;
+    }
+    40% {
+      opacity: 0.4;
+    }
+    60% {
+      opacity: 0.8;
+    }
+    80% {
+      opacity: 0.5;
+    }
+  }
+
+  /* 光晕的呼吸效果，更加平滑 */
+  @keyframes lightning-glow {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.6;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+  }
+}
+
+// 发光环绕 ------------------ 结束 ---------------------------

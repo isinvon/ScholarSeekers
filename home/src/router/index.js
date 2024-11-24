@@ -38,4 +38,20 @@ router.afterEach(() => {
     NProgress.done()
 })
 
+// TODO 需求: 完善路由守卫登录Token拦截-2024.7.20新建任务
+// 在加载路由前，判断是否登录
+// router.beforeEach((to, from, next) => {
+//     // 如果是登录页面，直接放行
+//     if (to.path === "/login") {
+//         next();
+//         return;
+//     }
+//     // 如果不是登录页面，判断是否登录
+//     if (localStorage.getItem("token")) {
+//         next();
+//     } else {
+//         next("/login");
+//     }
+// });
+
 export default router;

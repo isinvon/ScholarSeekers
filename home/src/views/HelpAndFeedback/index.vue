@@ -2,7 +2,9 @@
   <div>
     <!--反馈表格记录-->
     <FeedbackTable/>
-
+    <!--<br>-->
+    <!--分页-->
+    <!--<MyPagination/>-->
   </div>
 </template>
 
@@ -11,10 +13,11 @@
 
 import FeedbackTable from './components/FeedbackTable'
 import {ref} from "vue";
+// import MyPagination from "@/components/MyPagination.vue";
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 @import url('./index.less');
 
 </style>

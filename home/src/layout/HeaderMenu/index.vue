@@ -6,12 +6,15 @@
       :ellipsis="false"
       @select="handleSelect"
   >
+    <!--logo-->
     <el-menu-item index="0">
-      <img
-          style="width: auto; height: 30px"
-          :src="LogoUrl"
-          alt="Element logo"
-      />
+      <!--el-tag标签-->
+      <el-tag @click="changeEmoji" style="width: 60px;height: 40px" effect="light" size="large" type="danger">
+        <span style="font-size: 25px">
+          <!--随机动物emoji-->
+          {{ emojiLogo }}
+        </span>
+      </el-tag>
     </el-menu-item>
 
     <div class="flex-grow"/>
@@ -53,21 +56,29 @@
 </template>
 
 <script lang="js" setup>
-
-import {ref, defineOptions} from 'vue'
+import {ref} from 'vue'
 // Logo
-import LogoUrl from '@/assets/logo.png'
 import {headerMenu} from "@/menuData/headerMenu";
 import CampusNewsRightDrawer from '@/components/Drawer/CampusNewsRightDrawer'
+// 翻转卡片
+import RandomUtils from "../../utils/RandomUtils";
 
 defineOptions({
   name: 'HeaderMenu'
 })
 
+const emojiLogo = ref(RandomUtils.getRandomAnimalEmoji())
+
 const activeIndex = ref('1')
 const handleSelect = (key, keyPath) => {
   console.log(key, keyPath)
 }
+
+// changeEmoji
+const changeEmoji = () => {
+  emojiLogo.value = RandomUtils.getRandomAnimalEmoji()
+}
+
 </script>
 
 <style lang="less" scoped>

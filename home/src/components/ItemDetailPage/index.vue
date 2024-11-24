@@ -92,7 +92,7 @@ defineOptions({
 const item = ref({
   id: 1,
   itemName: '丢失物品',
-  imageUrl: 'https://picsum.photos/200/200',
+  imageUrl: 'https://picsum.photos/100/100',
   itemDescription: '这是物品的描述',
   lostTime: '2023-01-01 12:00',
   lostPlace: '图书馆',

@@ -6,11 +6,14 @@
   <!--  <el-radio value="default">Default</el-radio>-->
   <!--  <el-radio value="small">Small</el-radio>-->
   <!--</el-radio-group>-->
-
+  <div class="cell-item">
+  </div>
+  <!--阴影环绕-->
+  <el-avatar class="avatar" :size="100" :src="props.data.avatar"/>
   <el-descriptions
       class="margin-top"
       title=""
-      :column="3"
+      :column="1"
       :size="size"
       border
   >
@@ -20,17 +23,17 @@
     <!--</template>-->
 
     <!--圆形头像-->
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <!--<el-icon :style="iconStyle">-->
-          <!--  <user/>-->
-          <!--</el-icon>-->
-          <!--头像-->
-        </div>
-      </template>
-      <el-avatar :size="100" :src="props.data.avatar"/>
-    </el-descriptions-item>
+    <!--<el-descriptions-item>-->
+    <!--  <template #label>-->
+    <!--    <div class="cell-item">-->
+    <!--      &lt;!&ndash;<el-icon :style="iconStyle">&ndash;&gt;-->
+    <!--      &lt;!&ndash;  <user/>&ndash;&gt;-->
+    <!--      &lt;!&ndash;</el-icon>&ndash;&gt;-->
+    <!--      &lt;!&ndash;头像&ndash;&gt;-->
+    <!--    </div>-->
+    <!--  </template>-->
+    <!--  <el-avatar :size="100" :src="props.data.avatar"/>-->
+    <!--</el-descriptions-item>-->
     <el-descriptions-item>
       <template #label>
         <div class="cell-item">
@@ -51,6 +54,9 @@
           性别
         </div>
       </template>
+      <!--标签：如果性别为女,则显示粉色♀,否则显示蓝色♂-->
+      <el-tag v-if="props.data.sex === '女'" size="small" type="danger">♀</el-tag>
+      <el-tag v-else size="small" type="primary">♂</el-tag>
       {{ props.data.sex }}
     </el-descriptions-item>
     <el-descriptions-item>
@@ -90,112 +96,38 @@
       <template #label>
         <div class="cell-item">
           <el-icon :style="iconStyle">
-            <location/>
-          </el-icon>
-          坐标
-        </div>
-      </template>
-      {{ props.data.place }}
-    </el-descriptions-item>
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <el-icon :style="iconStyle">
-            <tickets/>
-          </el-icon>
-          单位
-        </div>
-      </template>
-      <el-tag size="small">{{ props.data.unit }}</el-tag>
-    </el-descriptions-item>
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <el-icon :style="iconStyle">
-            <office-building/>
-          </el-icon>
-          家庭住址
-        </div>
-      </template>
-      {{ props.data.address }}
-    </el-descriptions-item>
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <el-icon :style="iconStyle">
-            <tickets/>
-          </el-icon>
-          职业
-        </div>
-      </template>
-      <el-tag size="small">{{ props.data.career }}</el-tag>
-    </el-descriptions-item>
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <el-icon :style="iconStyle">
-            <tickets/>
-          </el-icon>
-          部门
-        </div>
-      </template>
-      <el-tag size="small">{{ props.data.department }}</el-tag>
-    </el-descriptions-item>
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <el-icon :style="iconStyle">
-            <tickets/>
-          </el-icon>
-          工作时间
-        </div>
-      </template>
-      {{ props.data.workTime }}
-    </el-descriptions-item>
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <el-icon :style="iconStyle">
-            <tickets/>
-          </el-icon>
-          学历
-        </div>
-      </template>
-      <el-tag size="small">{{ props.data.education }}</el-tag>
-    </el-descriptions-item>
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <el-icon :style="iconStyle">
             <user/>
           </el-icon>
-          专业
+          邮箱
         </div>
       </template>
-      {{ props.data.major }}
+      {{ props.data.email }}
     </el-descriptions-item>
+
     <el-descriptions-item>
       <template #label>
         <div class="cell-item">
           <el-icon :style="iconStyle">
-            <user/>
+            <tickets/>
           </el-icon>
-          毕业时间
+          学院
         </div>
       </template>
-      {{ props.data.graduation }}
+      <el-tag size="small">{{ props.data.college }}</el-tag>
     </el-descriptions-item>
+
     <el-descriptions-item>
       <template #label>
         <div class="cell-item">
           <el-icon :style="iconStyle">
-            <user/>
+            <tickets/>
           </el-icon>
-          毕业院校
+          专业班级
         </div>
       </template>
-      {{ props.data.graduationSchool }}
+      <el-tag size="small">{{ props.data.major }} {{ props.data.class }}</el-tag>
     </el-descriptions-item>
+
     <el-descriptions-item>
       <template #label>
         <div class="cell-item">
@@ -214,34 +146,12 @@
       <template #label>
         <div class="cell-item">
           <el-icon :style="iconStyle">
-            <user/>
+            <office-building/>
           </el-icon>
-          邮箱
+          家庭住址
         </div>
       </template>
-      {{ props.data.email }}
-    </el-descriptions-item>
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <el-icon :style="iconStyle">
-            <user/>
-          </el-icon>
-          网站
-        </div>
-      </template>
-      {{ props.data.website }}
-    </el-descriptions-item>
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <el-icon :style="iconStyle">
-            <user/>
-          </el-icon>
-          网站
-        </div>
-      </template>
-      {{ props.data.website }}
+      {{ props.data.address }}
     </el-descriptions-item>
     <el-descriptions-item>
       <template #label>
@@ -254,54 +164,8 @@
       </template>
       {{ props.data.introduction }}
     </el-descriptions-item>
-
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <el-icon :style="iconStyle">
-            <user/>
-          </el-icon>
-          个人介绍
-        </div>
-      </template>
-      <el-tag v-for="(tag, index) in props.data.title" :key="index" style="margin-right: 10px">
-        {{ tag }}
-      </el-tag>
-    </el-descriptions-item>
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <el-icon :style="iconStyle">
-            <user/>
-          </el-icon>
-          公司
-        </div>
-      </template>
-      {{ props.data.company }}
-    </el-descriptions-item>
-
   </el-descriptions>
 
-  <!--<el-descriptions-->
-  <!--    class="margin-top"-->
-  <!--    title="Without border"-->
-  <!--    :column="3"-->
-  <!--    :size="size"-->
-  <!--    :style="blockMargin"-->
-  <!--&gt;-->
-  <!--  <template #extra>-->
-  <!--    <el-button type="primary">Operation</el-button>-->
-  <!--  </template>-->
-  <!--  <el-descriptions-item label="Username">kooriookami</el-descriptions-item>-->
-  <!--  <el-descriptions-item label="Telephone">18100000000</el-descriptions-item>-->
-  <!--  <el-descriptions-item label="Place">Suzhou</el-descriptions-item>-->
-  <!--  <el-descriptions-item label="Remarks">-->
-  <!--    <el-tag size="small">School</el-tag>-->
-  <!--  </el-descriptions-item>-->
-  <!--  <el-descriptions-item label="Address">-->
-  <!--    No.1188, Wuzhong Avenue, Wuzhong District, Suzhou, Jiangsu Province-->
-  <!--  </el-descriptions-item>-->
-  <!--</el-descriptions>-->
 </template>
 
 <script setup lang="js">
@@ -321,28 +185,17 @@ const props = defineProps({
     default: () => ({
       name: '刘禹锡',
       age: 18,
-      sex: '男',
-      career: '前端开发工程师',
-      department: '前端组',
-      workTime: '2021-01-01',
-      education: '本科',
-      major: '计算机科学与技术',
-      graduation: '2021-01-01',
-      graduationSchool: '上海大学',
+      sex: '女',
+      college: '计算机科学与工程学院',
+      major: '网络工程',
+      class: '21-2班',
       address: '牡丹省樱花市雨花区莲花街道55号',
-      place: '苏州',
       birthdate: '2002-10-03',
       tags: ['好学生', '优秀开发者', '超牛黑客', 'Github大牛'],
-      icon: 'el-icon-edit',
       phone: '123456789',
       email: '123456789@qq.com',
-      website: 'https://www.baidu.com',
       introduction: '老子从不听天由命，尊从本心。',
-      // avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
       avatar: 'https://picsum.photos/200/200',
-      title: ['CEO', '马拉松冠军', 'Github之星', 'Lin语言创立者'],
-      unit: '学校',
-      company: 'Alibaba',
     }),
   },
 })

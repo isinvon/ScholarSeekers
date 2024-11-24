@@ -1,6 +1,6 @@
 <!--校园新闻右侧边抽屉-->
 <template>
-  <el-button type="primary" style="margin-left: 16px" @click="drawer = true">
+  <el-button type="danger" plain style="margin-left: 16px" @click="drawer = true">
     今日热点
   </el-button>
 

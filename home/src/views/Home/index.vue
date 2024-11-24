@@ -2,16 +2,16 @@
   <div class="container">
     <!--第一行-->
     <el-row :gutter="15">
-      <el-col :span="16">
+      <el-col :span="24">
         <div class="grid-content ep-bg-purple"/>
         <!-- 轮播图 -->
-        <Carousel class="home-element carousel" :carouse-list="carouseList"/>
+        <Carousel class="home-element carousel" :height="`350px`" :carouse-list="carouseList"/>
       </el-col>
-      <el-col :span="8">
-        <div class="grid-content ep-bg-purple"/>
-        <!--柱状图-->
-        <BarChart id="barChart" class="home-element bar-chart" style="height: 250px;width: 300px;"/>
-      </el-col>
+      <!--<el-col :span="8">-->
+      <!--  <div class="grid-content ep-bg-purple"/>-->
+      <!--  &lt;!&ndash;柱状图&ndash;&gt;-->
+      <!--  <BarChart id="barChart" class="home-element bar-chart" style="height: 250px;width: 300px;"/>-->
+      <!--</el-col>-->
     </el-row>
     <!--第二行-->
     <el-row :gutter="15">
@@ -39,10 +39,10 @@
       </el-col>
     </el-row>
   </div>
+  <GuideLine/>
 </template>
 
 <script setup>
-
 // 柱状图
 import BarChart from '@/components/Echart/BarChart'
 // 轮播图
@@ -51,6 +51,8 @@ import Carousel from './components/Carousel'
 import RecentEvent from './components/RecentEvent'
 // 访客统计
 import RecentLost from "./components/RecentLost";
+// 问题指南
+import GuideLine from './components/GuideLine'
 import Home from "@/api/home";
 import {onMounted, ref} from "vue";
 

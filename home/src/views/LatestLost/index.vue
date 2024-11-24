@@ -4,6 +4,37 @@ import ItemCart from "@/components/ItemCard";
 import MyPagination from "@/components/MyPagination.vue";
 // 数据统计
 import Statistic from './components/Statistic'
+import RandomUtils from "@/utils/RandomUtils";
+import MockRandomUtils from "../../../mock/utils/MockRandomUtils";
+import {onMounted, ref} from "vue";
+
+// 模拟请求数据
+const items = ref([]); // 使用 ref 创建响应式数据
+const itemsLoaded = ref(false); // 加载状态
+
+async function generateItems() {
+  for (let i = 0; i < 20; i++) {
+    items.value.push({
+      itemImageUrl: RandomUtils.getRandomGrayBlurImageBySizeAndBlur(200, 200, 8),
+      itemDescription: MockRandomUtils.getRandomChineseParagraph().slice(0, 10),
+      lostLocation: MockRandomUtils.getRandomAddress(),
+      finderContact: MockRandomUtils.getRandomMobile(),
+      lostDate: MockRandomUtils.getRandomDateTime(),
+      itemType: MockRandomUtils.getRandomChineseWordByLen(2),
+      isClaimed: RandomUtils.getRandomBoolean()
+    });
+
+    // 每次生成一个 item 后等待 1 秒
+    await new Promise(resolve => setTimeout(resolve, 50));
+  }
+
+  itemsLoaded.value = true; // 数据加载完成
+}
+
+// 在组件挂载后调用生成数据函数
+onMounted(() => {
+  generateItems();
+});
 </script>
 
 <template>
@@ -13,23 +44,20 @@ import Statistic from './components/Statistic'
     <el-divider>New</el-divider>
     <!--多栏布局-->
     <el-row :gutter="20">
-      <el-col :span="6" v-for="item in 20" :key="item">
-        <div class="grid-content ep-bg-purple" />
-        <!-- 物品卡片 -->
-        <ItemCart class="item-cart" />
+      <!-- 遍历 items 数组，每个卡片占用6个span，24 / 6 = 每行4个卡片 -->
+      <el-col v-for="(item, index) in items" :key="index" :span="6">
+        <!-- 物品卡片，传递单个 item 数据 -->
+        <ItemCart :item="item" class="item-cart"/>
       </el-col>
     </el-row>
+
     <!--分页-->
-    <MyPagination />
+    <MyPagination/>
   </div>
 </template>
 
-<style scoped lang="scss">
-
-
+<style scoped lang="less">
 .item-cart:hover {
-  //边缘阴影
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.2);
   //时间过渡
   transition: all 0.4s ease;
 }

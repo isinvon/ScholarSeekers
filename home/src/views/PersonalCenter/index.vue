@@ -15,22 +15,15 @@
     </el-button>
 
     <!-- 返回按钮，仅在编辑模式时显示 -->
-    <el-button v-if="isEditing" type="primary" @click="returnToProfile">
-      返回
-    </el-button>
-
-    <!-- 分割线 -->
-    <el-divider>认领记录</el-divider>
-
-    <!-- 认领记录 -->
-    <LostAndFoundRecord/>
+    <!--<el-button v-if="isEditing" type="primary" @click="returnToProfile">-->
+    <!--  返回-->
+    <!--</el-button>-->
   </div>
 </template>
 
 <script setup>
 
 import PersonalForm from './components/PersonalForm';
-import LostAndFoundRecord from "./components/LostAndFoundRecord";
 import {useRouter} from 'vue-router';
 import {ref} from "vue";
 
@@ -44,12 +37,12 @@ const edit = () => {
   router.push('/personalCenter/edit');
 };
 
-const returnToProfile = () => {
-  // 返回到查看个人资料状态，显示表单，隐藏编辑界面
-  isEditing.value = false;
-  // 如果需要，可以在此处添加逻辑来处理返回时的路由变化
-  router.push('/personalCenter');
-};
+// const returnToProfile = () => {
+//   // 返回到查看个人资料状态，显示表单，隐藏编辑界面
+//   isEditing.value = false;
+//   // 如果需要，可以在此处添加逻辑来处理返回时的路由变化
+//   router.push('/personalCenter');
+// };
 </script>
 
 

@@ -2,7 +2,10 @@
   <el-row class="tac">
     <!--调整占据的空间为24/24-->
     <el-col :span="24">
-      <h3 class="mb-2" style="color: #207585">Glut失物招领</h3>
+      <!--项目标题 - logo -->
+      <!--<h3 class="mb-2" style="color: #207585">Glut失物招领</h3>-->
+      <!--反转卡片 - Logo -->
+      <FlipCard class="flip-card" :front-text="'寻物系统'" :front-detail="''" :back-text="'By Sinvon'" :back-detail="''"/>
       <el-menu
           default-active="2"
           class="el-menu-vertical-demo"
@@ -26,6 +29,7 @@
 <script lang="js" setup>
 
 import {sideMenu} from "@/menuData/sideMenu";
+import FlipCard from "@/components/FlipCard/index.vue";
 
 const handleOpen = (key, keyPath) => {
   // console.log(key, keyPath)

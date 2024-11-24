@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import {defineOptions, ref} from 'vue'
+import {ref} from 'vue'
 import {useRouter} from 'vue-router'
 
 

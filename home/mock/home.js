@@ -10,7 +10,9 @@ Mock.mock(apiPrefix + '/home/getCarouselList', 'get', () => {
         data.push({
             id: Mock.Random.guid(),
             title: Mock.Random.ctitle(),
-            img: Mock.Random.image('200x200', Mock.Random.color(), Mock.Random.cword(5, 10),),
+            // 随机图片(不同颜色)
+            // img: Mock.Random.image('200x200', Mock.Random.color(), Mock.Random.cword(5, 10),),
+            img: "https://picsum.photos/200/200",
             url: `https://www.baidu.com/s?wd=${i + 1}`
         })
     }

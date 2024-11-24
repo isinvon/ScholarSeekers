@@ -7,6 +7,12 @@ class RouteUtils {
         window.history.back();
     }
 
+    // 返回上一个页面,并且刷新页面
+    static goBackToPreviousPageAndRefresh() {
+        window.history.back();
+        window.location.reload();
+    }
+
     // 跳转到物品详情页(新标签)
     static goToItemDetailPage(id) {
         window.open(`/item/${id}`, "_blank");
