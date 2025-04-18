@@ -82,6 +82,7 @@ const props = defineProps({
     required: true,
     default: () => ([
       {
+        id: 1,
         itemImageUrl: "https://picsum.photos/200/200",
         itemDescription: "一个丢失的垃圾袋",
         lostLocation: "二号食堂水果店",
@@ -98,7 +99,7 @@ const imageLoading = ref(true);
 
 // 点击卡片跳转详情页
 const handleClick = (item) => {
-  alert('跳转到物品详情页: ' + item.itemDescription);
+  alert('跳转到物品详情页: ' + item.id);
 };
 </script>
 
