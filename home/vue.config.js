@@ -37,7 +37,7 @@ module.exports = defineConfig({
         proxy: {
             "/api": {
                 // 后端接口域名
-                target: "http://localhost:3000",
+                target: "http://localhost:8080",
                 // 允许跨域
                 changeOrigin: true,
                 // 重写路径
