@@ -1,19 +1,20 @@
 package com.ruoyi.project.admin.service;
 
-import java.util.List;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoyi.project.admin.domain.Claim;
+
+import java.util.List;
 
 /**
  * 认领记录Service接口
- * 
+ *
  * @author sinvon
  * @date 2025-04-19
  */
-public interface IClaimService 
-{
+public interface IClaimService extends IService<Claim> {
     /**
      * 查询认领记录
-     * 
+     *
      * @param id 认领记录主键
      * @return 认领记录
      */
@@ -21,7 +22,7 @@ public interface IClaimService
 
     /**
      * 查询认领记录列表
-     * 
+     *
      * @param claim 认领记录
      * @return 认领记录集合
      */
@@ -29,7 +30,7 @@ public interface IClaimService
 
     /**
      * 新增认领记录
-     * 
+     *
      * @param claim 认领记录
      * @return 结果
      */
@@ -37,7 +38,7 @@ public interface IClaimService
 
     /**
      * 修改认领记录
-     * 
+     *
      * @param claim 认领记录
      * @return 结果
      */
@@ -45,7 +46,7 @@ public interface IClaimService
 
     /**
      * 批量删除认领记录
-     * 
+     *
      * @param ids 需要删除的认领记录主键集合
      * @return 结果
      */
@@ -53,7 +54,7 @@ public interface IClaimService
 
     /**
      * 删除认领记录信息
-     * 
+     *
      * @param id 认领记录主键
      * @return 结果
      */

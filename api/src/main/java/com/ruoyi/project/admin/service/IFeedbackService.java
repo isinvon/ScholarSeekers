@@ -1,19 +1,20 @@
 package com.ruoyi.project.admin.service;
 
-import java.util.List;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoyi.project.admin.domain.Feedback;
+
+import java.util.List;
 
 /**
  * 帮助与反馈Service接口
- * 
+ *
  * @author sinvon
  * @date 2025-04-19
  */
-public interface IFeedbackService 
-{
+public interface IFeedbackService extends IService<Feedback> {
     /**
      * 查询帮助与反馈
-     * 
+     *
      * @param id 帮助与反馈主键
      * @return 帮助与反馈
      */
@@ -21,7 +22,7 @@ public interface IFeedbackService
 
     /**
      * 查询帮助与反馈列表
-     * 
+     *
      * @param feedback 帮助与反馈
      * @return 帮助与反馈集合
      */
@@ -29,7 +30,7 @@ public interface IFeedbackService
 
     /**
      * 新增帮助与反馈
-     * 
+     *
      * @param feedback 帮助与反馈
      * @return 结果
      */
@@ -37,7 +38,7 @@ public interface IFeedbackService
 
     /**
      * 修改帮助与反馈
-     * 
+     *
      * @param feedback 帮助与反馈
      * @return 结果
      */
@@ -45,7 +46,7 @@ public interface IFeedbackService
 
     /**
      * 批量删除帮助与反馈
-     * 
+     *
      * @param ids 需要删除的帮助与反馈主键集合
      * @return 结果
      */
@@ -53,7 +54,7 @@ public interface IFeedbackService
 
     /**
      * 删除帮助与反馈信息
-     * 
+     *
      * @param id 帮助与反馈主键
      * @return 结果
      */

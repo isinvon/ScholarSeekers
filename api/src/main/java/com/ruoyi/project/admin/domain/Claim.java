@@ -1,5 +1,7 @@
 package com.ruoyi.project.admin.domain;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.aspectj.lang.annotation.Excel;
@@ -11,6 +13,8 @@ import com.ruoyi.framework.web.domain.BaseEntity;
  * @author sinvon
  * @date 2025-04-19
  */
+@EqualsAndHashCode(callSuper = true)
+@Data
 public class Claim extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -32,67 +36,4 @@ public class Claim extends BaseEntity
 
     /** 是否已删除 */
     private Boolean isDeleted;
-
-    public void setId(Integer id) 
-    {
-        this.id = id;
-    }
-
-    public Integer getId() 
-    {
-        return id;
-    }
-
-    public void setItemId(Integer itemId) 
-    {
-        this.itemId = itemId;
-    }
-
-    public Integer getItemId() 
-    {
-        return itemId;
-    }
-
-    public void setClaimantId(Integer claimantId) 
-    {
-        this.claimantId = claimantId;
-    }
-
-    public Integer getClaimantId() 
-    {
-        return claimantId;
-    }
-
-    public void setProof(String proof) 
-    {
-        this.proof = proof;
-    }
-
-    public String getProof() 
-    {
-        return proof;
-    }
-
-    public void setIsDeleted(Boolean isDeleted) 
-    {
-        this.isDeleted = isDeleted;
-    }
-
-    public Boolean getIsDeleted() 
-    {
-        return isDeleted;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("itemId", getItemId())
-            .append("claimantId", getClaimantId())
-            .append("proof", getProof())
-            .append("createTime", getCreateTime())
-            .append("updateTime", getUpdateTime())
-            .append("isDeleted", getIsDeleted())
-            .toString();
-    }
 }

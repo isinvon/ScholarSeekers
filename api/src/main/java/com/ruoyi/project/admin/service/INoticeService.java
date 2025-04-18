@@ -1,19 +1,20 @@
 package com.ruoyi.project.admin.service;
 
-import java.util.List;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoyi.project.admin.domain.Notice;
+
+import java.util.List;
 
 /**
  * 通知Service接口
- * 
+ *
  * @author sinvon
  * @date 2025-04-19
  */
-public interface INoticeService 
-{
+public interface INoticeService extends IService<Notice> {
     /**
      * 查询通知
-     * 
+     *
      * @param id 通知主键
      * @return 通知
      */
@@ -21,7 +22,7 @@ public interface INoticeService
 
     /**
      * 查询通知列表
-     * 
+     *
      * @param notice 通知
      * @return 通知集合
      */
@@ -29,7 +30,7 @@ public interface INoticeService
 
     /**
      * 新增通知
-     * 
+     *
      * @param notice 通知
      * @return 结果
      */
@@ -37,7 +38,7 @@ public interface INoticeService
 
     /**
      * 修改通知
-     * 
+     *
      * @param notice 通知
      * @return 结果
      */
@@ -45,7 +46,7 @@ public interface INoticeService
 
     /**
      * 批量删除通知
-     * 
+     *
      * @param ids 需要删除的通知主键集合
      * @return 结果
      */
@@ -53,7 +54,7 @@ public interface INoticeService
 
     /**
      * 删除通知信息
-     * 
+     *
      * @param id 通知主键
      * @return 结果
      */

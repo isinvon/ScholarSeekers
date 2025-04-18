@@ -1,6 +1,8 @@
 package com.ruoyi.project.admin.service;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoyi.project.admin.domain.Category;
 
 /**
@@ -9,7 +11,7 @@ import com.ruoyi.project.admin.domain.Category;
  * @author sinvon
  * @date 2025-04-19
  */
-public interface ICategoryService 
+public interface ICategoryService extends IService<Category>
 {
     /**
      * 查询物品类别

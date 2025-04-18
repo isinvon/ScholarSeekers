@@ -1,19 +1,23 @@
 package com.ruoyi.project.admin.mapper;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ruoyi.project.admin.domain.Category;
 import com.ruoyi.project.admin.domain.LostItem;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 丢失物品Mapper接口
- * 
+ *
  * @author sinvon
  * @date 2025-04-19
  */
-public interface LostItemMapper 
-{
+@Mapper
+public interface LostItemMapper extends BaseMapper<LostItem> {
     /**
      * 查询丢失物品
-     * 
+     *
      * @param id 丢失物品主键
      * @return 丢失物品
      */
@@ -21,7 +25,7 @@ public interface LostItemMapper
 
     /**
      * 查询丢失物品列表
-     * 
+     *
      * @param lostItem 丢失物品
      * @return 丢失物品集合
      */
@@ -29,7 +33,7 @@ public interface LostItemMapper
 
     /**
      * 新增丢失物品
-     * 
+     *
      * @param lostItem 丢失物品
      * @return 结果
      */
@@ -37,7 +41,7 @@ public interface LostItemMapper
 
     /**
      * 修改丢失物品
-     * 
+     *
      * @param lostItem 丢失物品
      * @return 结果
      */
@@ -45,7 +49,7 @@ public interface LostItemMapper
 
     /**
      * 删除丢失物品
-     * 
+     *
      * @param id 丢失物品主键
      * @return 结果
      */
@@ -53,7 +57,7 @@ public interface LostItemMapper
 
     /**
      * 批量删除丢失物品
-     * 
+     *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */

@@ -1,6 +1,8 @@
 package com.ruoyi.project.admin.service.impl;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +17,7 @@ import com.ruoyi.project.admin.service.ICategoryService;
  * @date 2025-04-19
  */
 @Service
-public class CategoryServiceImpl implements ICategoryService 
+public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements ICategoryService
 {
     @Autowired
     private CategoryMapper categoryMapper;

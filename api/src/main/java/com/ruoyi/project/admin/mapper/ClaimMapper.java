@@ -1,19 +1,22 @@
 package com.ruoyi.project.admin.mapper;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.project.admin.domain.Claim;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 认领记录Mapper接口
- * 
+ *
  * @author sinvon
  * @date 2025-04-19
  */
-public interface ClaimMapper 
-{
+@Mapper
+public interface ClaimMapper extends BaseMapper<Claim> {
     /**
      * 查询认领记录
-     * 
+     *
      * @param id 认领记录主键
      * @return 认领记录
      */
@@ -21,7 +24,7 @@ public interface ClaimMapper
 
     /**
      * 查询认领记录列表
-     * 
+     *
      * @param claim 认领记录
      * @return 认领记录集合
      */
@@ -29,7 +32,7 @@ public interface ClaimMapper
 
     /**
      * 新增认领记录
-     * 
+     *
      * @param claim 认领记录
      * @return 结果
      */
@@ -37,7 +40,7 @@ public interface ClaimMapper
 
     /**
      * 修改认领记录
-     * 
+     *
      * @param claim 认领记录
      * @return 结果
      */
@@ -45,7 +48,7 @@ public interface ClaimMapper
 
     /**
      * 删除认领记录
-     * 
+     *
      * @param id 认领记录主键
      * @return 结果
      */
@@ -53,7 +56,7 @@ public interface ClaimMapper
 
     /**
      * 批量删除认领记录
-     * 
+     *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */

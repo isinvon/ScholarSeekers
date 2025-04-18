@@ -1,19 +1,23 @@
 package com.ruoyi.project.admin.mapper;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ruoyi.project.admin.domain.Category;
 import com.ruoyi.project.admin.domain.Feedback;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 帮助与反馈Mapper接口
- * 
+ *
  * @author sinvon
  * @date 2025-04-19
  */
-public interface FeedbackMapper 
-{
+@Mapper
+public interface FeedbackMapper extends BaseMapper<Feedback> {
     /**
      * 查询帮助与反馈
-     * 
+     *
      * @param id 帮助与反馈主键
      * @return 帮助与反馈
      */
@@ -21,7 +25,7 @@ public interface FeedbackMapper
 
     /**
      * 查询帮助与反馈列表
-     * 
+     *
      * @param feedback 帮助与反馈
      * @return 帮助与反馈集合
      */
@@ -29,7 +33,7 @@ public interface FeedbackMapper
 
     /**
      * 新增帮助与反馈
-     * 
+     *
      * @param feedback 帮助与反馈
      * @return 结果
      */
@@ -37,7 +41,7 @@ public interface FeedbackMapper
 
     /**
      * 修改帮助与反馈
-     * 
+     *
      * @param feedback 帮助与反馈
      * @return 结果
      */
@@ -45,7 +49,7 @@ public interface FeedbackMapper
 
     /**
      * 删除帮助与反馈
-     * 
+     *
      * @param id 帮助与反馈主键
      * @return 结果
      */
@@ -53,7 +57,7 @@ public interface FeedbackMapper
 
     /**
      * 批量删除帮助与反馈
-     * 
+     *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */

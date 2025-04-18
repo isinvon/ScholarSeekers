@@ -2,6 +2,8 @@ package com.ruoyi.project.admin.domain;
 
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.aspectj.lang.annotation.Excel;
@@ -13,6 +15,8 @@ import com.ruoyi.framework.web.domain.BaseEntity;
  * @author sinvon
  * @date 2025-04-19
  */
+@EqualsAndHashCode(callSuper = true)
+@Data
 public class Notice extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -37,77 +41,4 @@ public class Notice extends BaseEntity
 
     /** 是否已删除 */
     private Boolean isDeleted;
-
-    public void setId(Long id) 
-    {
-        this.id = id;
-    }
-
-    public Long getId() 
-    {
-        return id;
-    }
-
-    public void setUserId(Long userId) 
-    {
-        this.userId = userId;
-    }
-
-    public Long getUserId() 
-    {
-        return userId;
-    }
-
-    public void setContent(String content) 
-    {
-        this.content = content;
-    }
-
-    public String getContent() 
-    {
-        return content;
-    }
-
-    public void setType(Long type) 
-    {
-        this.type = type;
-    }
-
-    public Long getType() 
-    {
-        return type;
-    }
-
-    public void setUpateTime(Date upateTime) 
-    {
-        this.upateTime = upateTime;
-    }
-
-    public Date getUpateTime() 
-    {
-        return upateTime;
-    }
-
-    public void setIsDeleted(Boolean isDeleted) 
-    {
-        this.isDeleted = isDeleted;
-    }
-
-    public Boolean getIsDeleted() 
-    {
-        return isDeleted;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("userId", getUserId())
-            .append("content", getContent())
-            .append("type", getType())
-            .append("createTime", getCreateTime())
-            .append("upateTime", getUpateTime())
-            .append("isDeleted", getIsDeleted())
-            .toString();
-    }
 }

@@ -1,19 +1,23 @@
 package com.ruoyi.project.admin.mapper;
 
 import java.util.List;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ruoyi.project.admin.domain.Category;
 import com.ruoyi.project.admin.domain.Notice;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 通知Mapper接口
- * 
+ *
  * @author sinvon
  * @date 2025-04-19
  */
-public interface NoticeMapper 
-{
+@Mapper
+public interface NoticeMapper extends BaseMapper<Notice> {
     /**
      * 查询通知
-     * 
+     *
      * @param id 通知主键
      * @return 通知
      */
@@ -21,7 +25,7 @@ public interface NoticeMapper
 
     /**
      * 查询通知列表
-     * 
+     *
      * @param notice 通知
      * @return 通知集合
      */
@@ -29,7 +33,7 @@ public interface NoticeMapper
 
     /**
      * 新增通知
-     * 
+     *
      * @param notice 通知
      * @return 结果
      */
@@ -37,7 +41,7 @@ public interface NoticeMapper
 
     /**
      * 修改通知
-     * 
+     *
      * @param notice 通知
      * @return 结果
      */
@@ -45,7 +49,7 @@ public interface NoticeMapper
 
     /**
      * 删除通知
-     * 
+     *
      * @param id 通知主键
      * @return 结果
      */
@@ -53,7 +57,7 @@ public interface NoticeMapper
 
     /**
      * 批量删除通知
-     * 
+     *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */

@@ -2,6 +2,8 @@ package com.ruoyi.project.admin.domain;
 
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.aspectj.lang.annotation.Excel;
@@ -13,6 +15,8 @@ import com.ruoyi.framework.web.domain.BaseEntity;
  * @author sinvon
  * @date 2025-04-19
  */
+@EqualsAndHashCode(callSuper = true)
+@Data
 public class LostItem extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -59,133 +63,4 @@ public class LostItem extends BaseEntity
 
     /** 是否已删除 */
     private Boolean isDeleted;
-
-    public void setId(Integer id) 
-    {
-        this.id = id;
-    }
-
-    public Integer getId() 
-    {
-        return id;
-    }
-
-    public void setTitle(String title) 
-    {
-        this.title = title;
-    }
-
-    public String getTitle() 
-    {
-        return title;
-    }
-
-    public void setDescription(String description) 
-    {
-        this.description = description;
-    }
-
-    public String getDescription() 
-    {
-        return description;
-    }
-
-    public void setCategoryId(Integer categoryId) 
-    {
-        this.categoryId = categoryId;
-    }
-
-    public Integer getCategoryId() 
-    {
-        return categoryId;
-    }
-
-    public void setLostLocation(String lostLocation) 
-    {
-        this.lostLocation = lostLocation;
-    }
-
-    public String getLostLocation() 
-    {
-        return lostLocation;
-    }
-
-    public void setLostTime(Date lostTime) 
-    {
-        this.lostTime = lostTime;
-    }
-
-    public Date getLostTime() 
-    {
-        return lostTime;
-    }
-
-    public void setStatus(Integer status) 
-    {
-        this.status = status;
-    }
-
-    public Integer getStatus() 
-    {
-        return status;
-    }
-
-    public void setPublisherId(Integer publisherId) 
-    {
-        this.publisherId = publisherId;
-    }
-
-    public Integer getPublisherId() 
-    {
-        return publisherId;
-    }
-
-    public void setImageUrl(String imageUrl) 
-    {
-        this.imageUrl = imageUrl;
-    }
-
-    public String getImageUrl() 
-    {
-        return imageUrl;
-    }
-
-    public void setContactInfo(String contactInfo) 
-    {
-        this.contactInfo = contactInfo;
-    }
-
-    public String getContactInfo() 
-    {
-        return contactInfo;
-    }
-
-    public void setIsDeleted(Boolean isDeleted) 
-    {
-        this.isDeleted = isDeleted;
-    }
-
-    public Boolean getIsDeleted() 
-    {
-        return isDeleted;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("title", getTitle())
-            .append("description", getDescription())
-            .append("categoryId", getCategoryId())
-            .append("lostLocation", getLostLocation())
-            .append("lostTime", getLostTime())
-            .append("status", getStatus())
-            .append("publisherId", getPublisherId())
-            .append("imageUrl", getImageUrl())
-            .append("contactInfo", getContactInfo())
-            .append("createTime", getCreateTime())
-            .append("updateTime", getUpdateTime())
-            .append("isDeleted", getIsDeleted())
-            .toString();
-    }
 }
