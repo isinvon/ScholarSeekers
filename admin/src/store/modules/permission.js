@@ -36,6 +36,8 @@ const usePermissionStore = defineStore(
         return new Promise(resolve => {
           // 向后端请求路由数据
           getRouters().then(res => {
+            //处理路由name
+            processName("", res.data);
             const sdata = JSON.parse(JSON.stringify(res.data))
             const rdata = JSON.parse(JSON.stringify(res.data))
             const defaultData = JSON.parse(JSON.stringify(res.data))
@@ -54,6 +56,21 @@ const usePermissionStore = defineStore(
       }
     }
   })
+
+/**
+ * 处理路由Name--父节点path+本节点path
+ * @param {*} name
+ * @param {*} data
+ */
+function processName(name, data) {
+    data.forEach((o) => {
+        let str = name + o.name;
+        o.name = str[0].toUpperCase() + str.slice(1).toLowerCase();
+        if (o.children && o.children.length > 0) {
+            processName(o.name, o.children);
+        }
+    });
+}
 
 // 遍历后台传来的路由字符串，转换为组件对象
 function filterAsyncRouter(asyncRouterMap, lastRouter = false, type = false) {
