@@ -36,19 +36,15 @@ module.exports = defineConfig({
         // 配置后端接口代理
         proxy: {
             "/api": {
-                // 后端接口域名
                 target: "http://localhost:8080",
-                // 允许跨域
                 changeOrigin: true,
-                // 重写路径
-                pathRewrite: {
-                    // 将api 替换成空
-                    "^/api": "",
-                },
-            },
-            // 其他配置
-            //  "/hotapi": {}
-        },
+                // 根据后端路由结构调整（二选一）
+                // 情况1：后端接口无/api前缀
+                pathRewrite: { "^/api": "" }
+                // 情况2：后端接口本身有/api前缀
+                // pathRewrite: { "^/api": "/api" }
+            }
+        }
     },
 });
 const cdn = {

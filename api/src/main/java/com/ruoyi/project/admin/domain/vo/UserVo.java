@@ -7,4 +7,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class UserVo extends User {
+    /**
+     * 搜索值
+     */
+    private String searchValue;
 }

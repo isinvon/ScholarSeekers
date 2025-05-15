@@ -1,6 +1,8 @@
 package com.ruoyi.project.admin.domain;
 
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,6 +19,7 @@ import com.ruoyi.framework.web.domain.BaseEntity;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@TableName("ss_lost_item")
 public class LostItem extends BaseEntity
 {
     private static final long serialVersionUID = 1L;

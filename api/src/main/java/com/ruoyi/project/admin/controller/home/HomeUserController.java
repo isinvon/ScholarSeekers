@@ -6,6 +6,7 @@ import com.ruoyi.project.admin.domain.User;
 import com.ruoyi.project.admin.domain.vo.UserVo;
 import com.ruoyi.project.admin.service.IUserService;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +28,7 @@ public class HomeUserController {
      * 查询用户列表
      */
     @PostMapping("/login")
-    public R<String> login(UserVo userVo) {
+    public R<String> login(@RequestBody UserVo userVo) {
         if (userVo == null) {
             return R.fail("登录信息不能为空");
         }
@@ -52,15 +53,21 @@ public class HomeUserController {
      * 注册
      */
     @PostMapping("/register")
-    public R<String> register(UserVo userVo) {
+    public R<String> register(@RequestBody UserVo userVo) {
         if (userVo == null) {
             return R.fail("注册信息不能为空");
         }
         // 手机号注册
         if (userVo.getPhone() != null && userVo.getPassword() != null) {
             User one = userService.lambdaQuery().eq(User::getPhone, userVo.getPhone()).one();
+            System.out.printf("one: " + one);
             if (one == null) {
                 User user = new User();
+                // username取 "用户" + 手机号前3位 + *** + 手机号后4位
+                user.setUsername("用户" + userVo.getPhone().substring(0, 3) + "***" + userVo.getPhone().substring(7));
+                user.setRole(User.Role.COMMON_USER); // 默认普通用户
+                user.setStatus(User.Status.NORMAL); // 默认正常
+                user.setIsDeleted(false);
                 user.setPhone(userVo.getPhone());
                 user.setPassword(userVo.getPassword());
                 userService.save(user);
@@ -92,7 +99,7 @@ public class HomeUserController {
 
     // 编辑用户信息
     @PostMapping("/edit")
-    public R<String> edit(UserVo userVo) {
+    public R<String> edit(@RequestBody UserVo userVo) {
         if (userVo == null) {
             return R.fail("编辑信息不能为空");
         }

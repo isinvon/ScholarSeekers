@@ -3,8 +3,8 @@
     <div class="login">
       <div class="logintext">Login</div>
       <div class="field">
-        <input type="text" v-model="username" placeholder="">
-        <div class="placeholder">Username</div>
+        <input type="text" v-model="phone" placeholder="">
+        <div class="placeholder">Phone</div>
       </div>
       <div class="field">
         <input type="text" v-model="password" placeholder="">
@@ -19,20 +19,27 @@
 import {ref} from 'vue'
 import {useRouter} from 'vue-router'
 import {ElMessage} from "element-plus";
+import Login from '@/api/login'
 
 
 defineOptions({
   name: 'Login'
 })
 
-const username = ref('')
+const phone = ref('')
 const password = ref('')
 const router = useRouter()
 
-console.log('用户登录：', username.value, password.value)
 const login = () => {
-  if (username.value === 'sinvon' && password.value === 'sinvon') {
-    // console.log('登录成功') // debug
+  if (phone.value === 'sinvon' && password.value === 'sinvon') {
+    Login.login({
+      username: phone.value,
+      password: password.value
+    }).then(() => {
+      ElMessage.success('登录成功！')
+    }).catch(() => {
+      ElMessage.error('登录失败！')
+    })
     router.push('/home')
   } else {
     ElMessage.error('用户名或密码错误,请重新输入')

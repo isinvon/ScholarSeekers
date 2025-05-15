@@ -1,5 +1,6 @@
 package com.ruoyi.project.admin.domain;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -15,6 +16,7 @@ import com.ruoyi.framework.web.domain.BaseEntity;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@TableName("ss_comment")
 public class Comment extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
