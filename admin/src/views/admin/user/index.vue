@@ -204,7 +204,7 @@
           <el-input v-model="form.introduction" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="是否已删除" prop="isDeleted">
-          <el-input v-model="form.isDeleted" placeholder="请输入是否已删除" />
+          <el-switch v-model="form.isDeleted" active-text="是" inactive-text="否"></el-switch>
         </el-form-item>
       </el-form>
       <template #footer>
