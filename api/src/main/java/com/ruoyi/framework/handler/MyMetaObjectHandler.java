@@ -18,26 +18,17 @@ import java.util.Date;
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
 
-    // @Override
-    // public void insertFill(MetaObject metaObject) {
-    //     log.info("公共字段开始自动填充[insert]...");
-    //     this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now());
-    // }
-    //
-    // @Override
-    // public void updateFill(MetaObject metaObject) {
-    //     log.info("公共字段开始自动填充[update]...");
-    //     this.strictUpdateFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
-    // }
-
     @Override
     public void insertFill(MetaObject metaObject) {
-        this.strictInsertFill(metaObject, "updateTime", Date.class, new Date());
-        this.strictInsertFill(metaObject, "createTime", Date.class, new Date());
+        log.info("公共字段开始自动填充[insert]...");
+        // 使用更宽松的填充方式
+        this.setFieldValByName("updateTime", new Date(), metaObject);
+        this.setFieldValByName("createTime", new Date(), metaObject);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        this.strictUpdateFill(metaObject, "updateTime", Date.class, new Date());
+        log.info("公共字段开始自动填充[update]...");
+        this.setFieldValByName("updateTime", new Date(), metaObject);
     }
 }

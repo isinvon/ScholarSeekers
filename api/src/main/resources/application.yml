@@ -36,7 +36,7 @@ logging:
   level:
     com.ruoyi: debug
     org.springframework: warn
-
+    com.baomidou.mybatisplus: debug
 # 用户配置
 user:
   password:
@@ -95,7 +95,7 @@ token:
   # 令牌密钥
   secret: abcdefghijklmnopqrstuvwxyz
   # 令牌有效期（默认30分钟）
-  expireTime: 30
+  expireTime: 3000000
 
 # mybatis-plus配置
 mybatis-plus:

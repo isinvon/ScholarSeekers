@@ -2,6 +2,7 @@ package com.ruoyi.project.admin.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,14 +24,13 @@ import com.ruoyi.framework.web.page.TableDataInfo;
 
 /**
  * 用户Controller
- * 
+ *
  * @author sinvon
  * @date 2025-04-19
  */
 @RestController
 @RequestMapping("/admin/user")
-public class UserController extends BaseController
-{
+public class UserController extends BaseController {
     @Autowired
     private IUserService userService;
 
@@ -39,8 +39,7 @@ public class UserController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('admin:user:list')")
     @GetMapping("/list")
-    public TableDataInfo list(User user)
-    {
+    public TableDataInfo list(User user) {
         startPage();
         List<User> list = userService.selectUserList(user);
         return getDataTable(list);
@@ -52,8 +51,7 @@ public class UserController extends BaseController
     @PreAuthorize("@ss.hasPermi('admin:user:export')")
     @Log(title = "用户", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, User user)
-    {
+    public void export(HttpServletResponse response, User user) {
         List<User> list = userService.selectUserList(user);
         ExcelUtil<User> util = new ExcelUtil<User>(User.class);
         util.exportExcel(response, list, "用户数据");
@@ -64,8 +62,7 @@ public class UserController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('admin:user:query')")
     @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Integer id)
-    {
+    public AjaxResult getInfo(@PathVariable("id") Integer id) {
         return success(userService.selectUserById(id));
     }
 
@@ -75,8 +72,8 @@ public class UserController extends BaseController
     @PreAuthorize("@ss.hasPermi('admin:user:add')")
     @Log(title = "用户", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody User user)
-    {
+    public AjaxResult add(@RequestBody User user) {
+        user.setRole(User.Role.COMMON_USER);
         return toAjax(userService.insertUser(user));
     }
 
@@ -86,8 +83,7 @@ public class UserController extends BaseController
     @PreAuthorize("@ss.hasPermi('admin:user:edit')")
     @Log(title = "用户", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody User user)
-    {
+    public AjaxResult edit(@RequestBody User user) {
         return toAjax(userService.updateUser(user));
     }
 
@@ -96,9 +92,8 @@ public class UserController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('admin:user:remove')")
     @Log(title = "用户", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Integer[] ids)
-    {
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Integer[] ids) {
         return toAjax(userService.deleteUserByIds(ids));
     }
 }
