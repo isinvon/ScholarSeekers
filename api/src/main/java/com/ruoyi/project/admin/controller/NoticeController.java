@@ -77,6 +77,8 @@ public class NoticeController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody Notice notice)
     {
+        notice.setIsDeleted(false);
+        notice.setType(Notice.Type.COMMON);
         return toAjax(noticeService.insertNotice(notice));
     }
 

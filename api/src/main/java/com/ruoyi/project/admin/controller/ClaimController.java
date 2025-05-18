@@ -77,6 +77,7 @@ public class ClaimController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody Claim claim)
     {
+        claim.setIsDeleted(false);
         return toAjax(claimService.insertClaim(claim));
     }
 

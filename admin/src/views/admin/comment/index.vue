@@ -3,34 +3,34 @@
     <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="评论者ID" prop="userId">
         <el-input
-          v-model="queryParams.userId"
-          placeholder="请输入评论者ID"
-          clearable
-          @keyup.enter="handleQuery"
+            v-model="queryParams.userId"
+            placeholder="请输入评论者ID"
+            clearable
+            @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item label="关联的失物ID" prop="itemId">
         <el-input
-          v-model="queryParams.itemId"
-          placeholder="请输入关联的失物ID"
-          clearable
-          @keyup.enter="handleQuery"
+            v-model="queryParams.itemId"
+            placeholder="请输入关联的失物ID"
+            clearable
+            @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item label="关联的文章ID" prop="articleId">
         <el-input
-          v-model="queryParams.articleId"
-          placeholder="请输入关联的文章ID"
-          clearable
-          @keyup.enter="handleQuery"
+            v-model="queryParams.articleId"
+            placeholder="请输入关联的文章ID"
+            clearable
+            @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item label="父评论ID" prop="parentCommentId">
         <el-input
-          v-model="queryParams.parentCommentId"
-          placeholder="请输入父评论ID"
-          clearable
-          @keyup.enter="handleQuery"
+            v-model="queryParams.parentCommentId"
+            placeholder="请输入父评论ID"
+            clearable
+            @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item>
@@ -42,89 +42,97 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          type="primary"
-          plain
-          icon="Plus"
-          @click="handleAdd"
-          v-hasPermi="['admin:comment:add']"
-        >新增</el-button>
+            type="primary"
+            plain
+            icon="Plus"
+            @click="handleAdd"
+            v-hasPermi="['admin:comment:add']"
+        >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
-          type="success"
-          plain
-          icon="Edit"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['admin:comment:edit']"
-        >修改</el-button>
+            type="success"
+            plain
+            icon="Edit"
+            :disabled="single"
+            @click="handleUpdate"
+            v-hasPermi="['admin:comment:edit']"
+        >修改
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
-          type="danger"
-          plain
-          icon="Delete"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['admin:comment:remove']"
-        >删除</el-button>
+            type="danger"
+            plain
+            icon="Delete"
+            :disabled="multiple"
+            @click="handleDelete"
+            v-hasPermi="['admin:comment:remove']"
+        >删除
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
-          type="warning"
-          plain
-          icon="Download"
-          @click="handleExport"
-          v-hasPermi="['admin:comment:export']"
-        >导出</el-button>
+            type="warning"
+            plain
+            icon="Download"
+            @click="handleExport"
+            v-hasPermi="['admin:comment:export']"
+        >导出
+        </el-button>
       </el-col>
       <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="commentList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="评论ID" align="center" prop="id" />
-      <el-table-column label="评论者ID" align="center" prop="userId" />
-      <el-table-column label="评论内容" align="center" prop="content" />
-      <el-table-column label="关联的失物ID" align="center" prop="itemId" />
-      <el-table-column label="关联的文章ID" align="center" prop="articleId" />
-      <el-table-column label="父评论ID" align="center" prop="parentCommentId" />
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="评论ID" align="center" prop="id"/>
+      <el-table-column label="评论者ID" align="center" prop="userId"/>
+      <el-table-column label="评论内容" align="center" prop="content"/>
+      <el-table-column label="关联的失物ID" align="center" prop="itemId"/>
+      <el-table-column label="关联的文章ID" align="center" prop="articleId"/>
+      <el-table-column label="父评论ID" align="center" prop="parentCommentId"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
-          <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['admin:comment:edit']">修改</el-button>
-          <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['admin:comment:remove']">删除</el-button>
+          <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)"
+                     v-hasPermi="['admin:comment:edit']">修改
+          </el-button>
+          <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)"
+                     v-hasPermi="['admin:comment:remove']">删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
-      v-show="total>0"
-      :total="total"
-      v-model:page="queryParams.pageNum"
-      v-model:limit="queryParams.pageSize"
-      @pagination="getList"
+        v-show="total>0"
+        :total="total"
+        v-model:page="queryParams.pageNum"
+        v-model:limit="queryParams.pageSize"
+        @pagination="getList"
     />
 
     <!-- 添加或修改评论对话框 -->
     <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="commentRef" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="评论者ID" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入评论者ID" />
+          <el-input-number v-model="form.userId" placeholder="请输入评论者ID"/>
         </el-form-item>
         <el-form-item label="评论内容">
           <editor v-model="form.content" :min-height="192"/>
         </el-form-item>
         <el-form-item label="关联的失物ID" prop="itemId">
-          <el-input v-model="form.itemId" placeholder="请输入关联的失物ID" />
+          <el-input-number v-model="form.itemId" placeholder="请输入关联的失物ID"/>
         </el-form-item>
         <el-form-item label="关联的文章ID" prop="articleId">
-          <el-input v-model="form.articleId" placeholder="请输入关联的文章ID" />
+          <el-input-number v-model="form.articleId" placeholder="请输入关联的文章ID"/>
         </el-form-item>
         <el-form-item label="父评论ID" prop="parentCommentId">
-          <el-input v-model="form.parentCommentId" placeholder="请输入父评论ID" />
+          <el-input-number v-model="form.parentCommentId" placeholder="请输入父评论ID"/>
         </el-form-item>
         <el-form-item label="是否已删除" prop="isDeleted">
-          <el-input v-model="form.isDeleted" placeholder="请输入是否已删除" />
+          <el-switch v-model="form.isDeleted" active-text="是" inactive-text="否"></el-switch>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -138,9 +146,9 @@
 </template>
 
 <script setup name="Comment">
-import { listComment, getComment, delComment, addComment, updateComment } from "@/api/admin/comment";
+import {listComment, getComment, delComment, addComment, updateComment} from "@/api/admin/comment";
 
-const { proxy } = getCurrentInstance();
+const {proxy} = getCurrentInstance();
 
 const commentList = ref([]);
 const open = ref(false);
@@ -163,11 +171,10 @@ const data = reactive({
     articleId: null,
     parentCommentId: null,
   },
-  rules: {
-  }
+  rules: {}
 });
 
-const { queryParams, form, rules } = toRefs(data);
+const {queryParams, form, rules} = toRefs(data);
 
 /** 查询评论列表 */
 function getList() {
@@ -262,12 +269,13 @@ function submitForm() {
 /** 删除按钮操作 */
 function handleDelete(row) {
   const _ids = row.id || ids.value;
-  proxy.$modal.confirm('是否确认删除评论编号为"' + _ids + '"的数据项？').then(function() {
+  proxy.$modal.confirm('是否确认删除评论编号为"' + _ids + '"的数据项？').then(function () {
     return delComment(_ids);
   }).then(() => {
     getList();
     proxy.$modal.msgSuccess("删除成功");
-  }).catch(() => {});
+  }).catch(() => {
+  });
 }
 
 /** 导出按钮操作 */

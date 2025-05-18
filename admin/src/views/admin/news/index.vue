@@ -97,12 +97,6 @@
         <el-form-item label="内容">
           <editor v-model="form.content" :min-height="192"/>
         </el-form-item>
-        <el-form-item label="发布者" prop="publisherId">
-          <el-input v-model="form.publisherId" placeholder="请输入发布者" />
-        </el-form-item>
-        <el-form-item label="是否已删除" prop="isDeleted">
-          <el-input v-model="form.isDeleted" placeholder="请输入是否已删除" />
-        </el-form-item>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
@@ -177,7 +171,6 @@ function reset() {
     title: null,
     content: null,
     type: null,
-    publisherId: null,
     createTime: null,
     updateTime: null,
     isDeleted: null

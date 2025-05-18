@@ -88,17 +88,14 @@
         <el-form-item label="通知内容">
           <editor v-model="form.content" :min-height="192"/>
         </el-form-item>
-        <el-form-item label="更新时间" prop="upateTime">
-          <el-date-picker clearable
-            v-model="form.upateTime"
-            type="date"
-            value-format="YYYY-MM-DD"
-            placeholder="请选择更新时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="是否已删除" prop="isDeleted">
-          <el-input v-model="form.isDeleted" placeholder="请输入是否已删除" />
-        </el-form-item>
+        <!--<el-form-item label="更新时间" prop="upateTime">-->
+        <!--  <el-date-picker clearable-->
+        <!--    v-model="form.upateTime"-->
+        <!--    type="date"-->
+        <!--    value-format="YYYY-MM-DD"-->
+        <!--    placeholder="请选择更新时间">-->
+        <!--  </el-date-picker>-->
+        <!--</el-form-item>-->
       </el-form>
       <template #footer>
         <div class="dialog-footer">

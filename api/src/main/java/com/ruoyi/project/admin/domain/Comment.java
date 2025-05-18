@@ -30,7 +30,7 @@ public class Comment extends BaseEntity
 
     /** 评论内容 */
     @Excel(name = "评论内容")
-    private Integer content;
+    private String content;
 
     /** 关联的失物ID */
     @Excel(name = "关联的失物ID")

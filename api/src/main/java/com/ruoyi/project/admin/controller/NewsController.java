@@ -2,6 +2,8 @@ package com.ruoyi.project.admin.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -77,6 +79,11 @@ public class NewsController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody News news)
     {
+        // 获取当前用户id
+        int userId = SecurityUtils.getUserId().intValue();
+        news.setPublisherId(userId); // 设置发布者id
+        news.setIsDeleted(false);
+        news.setType(News.Type.COMMON);
         return toAjax(newsService.insertNews(news));
     }
 

@@ -99,9 +99,6 @@
         <el-form-item label="认领凭证" prop="proof">
           <el-input v-model="form.proof" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="是否已删除" prop="isDeleted">
-          <el-input v-model="form.isDeleted" placeholder="请输入是否已删除" />
-        </el-form-item>
       </el-form>
       <template #footer>
         <div class="dialog-footer">

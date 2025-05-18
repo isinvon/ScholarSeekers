@@ -109,10 +109,7 @@
           <el-input v-model="form.userId" placeholder="请输入author_id" />
         </el-form-item>
         <el-form-item label="关联的失物ID (可选)" prop="relatedItemId">
-          <el-input v-model="form.relatedItemId" placeholder="请输入关联的失物ID (可选)" />
-        </el-form-item>
-        <el-form-item label="是否已删除" prop="isDeleted">
-          <el-input v-model="form.isDeleted" placeholder="请输入是否已删除" />
+          <el-input v-model="form.relatedItemId" placeholder="关联的失物ID (可选)" />
         </el-form-item>
       </el-form>
       <template #footer>
