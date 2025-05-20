@@ -2,12 +2,16 @@ import request from "@/utils/Request";
 
 class User {
 
-    /**
-     * 编辑用户信息
-     * @returns {Promise}
-     */
-    edit(data) {
-        return request.post("/home/user/edit", data)
+    loginApi(data) {
+        return request.post('/auth/login', data)
+    }
+
+    logoutApi(data) {
+        return request.post('/auth/logout', data)
+    }
+
+    getUserInfo(data) {
+        return request.post('/home/user/getInfo', data)
     }
 }
 

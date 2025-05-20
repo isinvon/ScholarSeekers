@@ -1,13 +1,15 @@
-const TokenKey = "Admin-Token";
+const TOKEN_KEY = "home-token";
 
 export function getToken() {
-  return localStorage.getItem(TokenKey);
+    return localStorage.getItem(TOKEN_KEY) || ''
 }
 
+// 设置token
 export function setToken(token) {
-  return localStorage.setItem(TokenKey, token);
+    localStorage.setItem(TOKEN_KEY, token)
 }
 
+// 删除token
 export function removeToken() {
-  return localStorage.removeItem(TokenKey);
+    localStorage.removeItem(TOKEN_KEY)
 }

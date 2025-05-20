@@ -8,6 +8,7 @@ import "element-plus/dist/index.css";
 import "./style/index.less";
 import * as echarts from "echarts";
 import {createPinia} from "pinia";
+import { formatDateTime } from '@/utils/dayjs'
 const pinia = createPinia();
 
 import {solveChangeSizeCausedProblem} from "@/utils/SolveChangeSizeCausedProblem";
@@ -40,6 +41,7 @@ const app = createApp(App);
 
 // 挂载echarts
 app.config.globalProperties.$echart = echarts;
+app.config.globalProperties.$formatDate = formatDateTime
 
 app.use(store).use(router).use(ElementPlus).use(pinia).mount("#app");
 

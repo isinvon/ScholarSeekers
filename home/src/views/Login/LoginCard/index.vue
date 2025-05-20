@@ -1,48 +1,94 @@
 <template>
-  <form @submit.prevent="login">
+  <form @submit.prevent="handleLogin">
     <div class="login">
-      <div class="logintext">Login</div>
+      <div class="logintext">用户登录</div>
+
+      <!-- 用户名/手机号输入 -->
       <div class="field">
-        <input type="text" v-model="phone" placeholder="">
-        <div class="placeholder">Phone</div>
+        <input
+            type="text"
+            v-model="form.username"
+            placeholder=" "
+            :disabled="loading"
+        >
+        <div class="placeholder">用户名</div>
       </div>
+
+      <!-- 密码输入 -->
       <div class="field">
-        <input type="text" v-model="password" placeholder="">
-        <div class="placeholder">Password</div>
+        <input
+            type="password"
+            v-model="form.password"
+            placeholder=" "
+            :disabled="loading"
+        >
+        <div class="placeholder">密码</div>
       </div>
-      <el-button native-type="submit" class="loginbtn" type="text">Continue</el-button>
+
+      <!-- 登录按钮 -->
+      <el-button
+          native-type="submit"
+          class="loginbtn"
+          :loading="loading"
+      >
+        {{ loading ? '登录中...' : '立即登录' }}
+      </el-button>
     </div>
   </form>
 </template>
 
 <script setup>
-import {ref} from 'vue'
-import {useRouter} from 'vue-router'
-import {ElMessage} from "element-plus";
-import Login from '@/api/login'
+import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
+import LoginApi from '@/api/login'
+import { useUserStore } from '@/store/user'
+import {setToken} from '@/utils/Token'
 
+const router = useRouter()
+const userStore = useUserStore()
 
-defineOptions({
-  name: 'Login'
+// 表单数据
+const form = reactive({
+  username: '',
+  password: ''
 })
 
-const phone = ref('')
-const password = ref('')
-const router = useRouter()
+// 加载状态
+const loading = ref(false)
 
-const login = () => {
-  if (phone.value === 'sinvon' && password.value === 'sinvon') {
-    Login.login({
-      username: phone.value,
-      password: password.value
-    }).then(() => {
-      ElMessage.success('登录成功！')
-    }).catch(() => {
-      ElMessage.error('登录失败！')
+const handleLogin = async () => {
+  try {
+    // 空值校验
+    if (!form.username || !form.password) {
+      ElMessage.warning('请输入用户名和密码')
+      return
+    }
+
+    loading.value = true
+
+    // 调用登录接口
+    const { code, data } = await LoginApi.login({
+      username: form.username,
+      password: form.password
     })
-    router.push('/home')
-  } else {
-    ElMessage.error('用户名或密码错误,请重新输入')
+
+    if (code === 200) {
+      // 存储token
+      setToken(data.token)
+
+      // 获取用户信息
+      await userStore.getInfo()
+
+      ElMessage.success('登录成功')
+      await router.push('/home')
+    }
+  } catch (error) {
+    console.error('登录失败:', error)
+    const msg = error.response?.data?.msg || '登录失败，请检查网络连接'
+    ElMessage.error(msg)
+  } finally {
+    loading.value = false
   }
 }
 </script>

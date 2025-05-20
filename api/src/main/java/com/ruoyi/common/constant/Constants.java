@@ -170,4 +170,9 @@ public class Constants
      */
     public static final String[] JOB_ERROR_STR = { "java.net.URL", "javax.naming.InitialContext", "org.yaml.snakeyaml",
             "org.springframework", "org.apache", "com.ruoyi.common.utils.file", "com.ruoyi.framework.config", "com.ruoyi.project.tool" };
+
+    /**
+     * 令牌前缀
+     */
+    public static final String LOGIN_TOKEN_KEY = "login_tokens:";
 }

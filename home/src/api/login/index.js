@@ -7,7 +7,7 @@ class Login {
      * @returns {Promise}
      */
     login(data) {
-        return request.post("/home/user/login", data)
+        return request.post("/home/user/auth/login", data)
     }
 
     /**
@@ -17,6 +17,15 @@ class Login {
      */
     register(data) {
         return request.post("/home/user/register", data)
+    }
+
+    /**
+     *
+     * @param data
+     * @returns {Promise}
+     */
+    logout(data) {
+        return request.post("/home/user/auth/logout", data)
     }
 }
 
