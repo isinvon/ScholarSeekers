@@ -162,6 +162,7 @@ onMounted(async () => {
   try {
     // 添加查询参数，获取parentId为null的顶级分类
     const res = await getCategoryList({parentId: null})
+    console.log('分类加载成功:', res)
     categoryList.value = res.rows // 注意若依默认返回数据字段是rows
   } catch (error) {
     ElMessage.error('获取分类失败')

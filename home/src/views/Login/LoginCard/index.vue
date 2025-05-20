@@ -75,7 +75,7 @@ const handleLogin = async () => {
 
     if (code === 200) {
       // 存储token
-      setToken(data.token)
+      // setToken(data.token)
 
       // 获取用户信息
       await userStore.getInfo()

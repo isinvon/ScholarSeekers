@@ -148,7 +148,11 @@ public class User extends BaseEntity {
         /**
          * 停用
          */
-        DISABLE(1, "停用");
+        DISABLE(1, "停用"),
+        /**
+         * 锁定
+         */
+        LOCKED(2, "锁定");
         @JsonValue
         @EnumValue
         private final Integer value;

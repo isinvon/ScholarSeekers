@@ -11,7 +11,9 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.project.common.domain.User;
 import com.ruoyi.project.home.domain.vo.UserVO;
 import com.ruoyi.project.home.mapper.HomeUserMapper;
+import com.ruoyi.project.home.other.utils.UserContextHolder;
 import com.ruoyi.project.home.service.IHomeUserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,12 +22,10 @@ import java.util.List;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class HomeUserServiceImpl extends ServiceImpl<HomeUserMapper, User> implements IHomeUserService {
     private final HomeUserMapper homeUserMapper;
-
-    public HomeUserServiceImpl(HomeUserMapper homeUserMapper) {
-        this.homeUserMapper = homeUserMapper;
-    }
+    private final UserContextHolder userContextHolder;
 
     @Override
     public List<User> selectUserList(User user) {
@@ -71,8 +71,8 @@ public class HomeUserServiceImpl extends ServiceImpl<HomeUserMapper, User> imple
      */
     @Override
     public UserVO getCurrentUserInfo() {
-        Long userId = SecurityUtils.getUserId();
-        User user = this.getById(userId);
+        Integer currentUserId = userContextHolder.getCurrentUserId();
+        User user = this.getById(currentUserId);
         return BeanUtil.copyProperties(user, UserVO.class);
     }
 
@@ -209,7 +209,8 @@ public class HomeUserServiceImpl extends ServiceImpl<HomeUserMapper, User> imple
         user.setRole(User.Role.COMMON_USER);
         user.setStatus(User.Status.NORMAL);
         user.setIsDeleted(false);
-        user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
+        // user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
+        user.setPassword(user.getPassword());
 
         return homeUserMapper.insert(user) > 0;
     }
@@ -218,7 +219,7 @@ public class HomeUserServiceImpl extends ServiceImpl<HomeUserMapper, User> imple
     @Transactional(rollbackFor = Exception.class)
     public boolean updateUserInfo(User user) {
         // 获取当前登录用户ID
-        Integer currentUserId = SecurityUtils.getUserId().intValue();
+        Integer currentUserId = userContextHolder.getCurrentUserId();
         if (!user.getId().equals(currentUserId)) {
             throw new ServiceException("只能修改本人信息");
         }

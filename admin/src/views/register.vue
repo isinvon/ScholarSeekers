@@ -39,7 +39,7 @@
       </el-form-item>
       <el-form-item prop="code" v-if="captchaEnabled">
         <el-input
-          size="large" 
+          size="large"
           v-model="registerForm.code"
           auto-complete="off"
           placeholder="验证码"

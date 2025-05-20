@@ -1,16 +1,24 @@
 // src/store/user.js
 import { defineStore } from 'pinia'
-import { getToken, removeToken, setToken } from '@/utils/Token'
 import User from '@/api/user'
 
 export const useUserStore = defineStore('user', {
     state: () => ({
-        token: getToken() || '',      // 从本地存储初始化token
-        userId: null,                 // 用户ID
-        userName: '',                 // 用户名
-        roles: [],                   // 用户角色
-        permissions: [],             // 权限列表
-        avatar: ''                   // 头像
+        id: null,
+        username: '',
+        phone: '',
+        email: '',
+        role: 0,
+        avatar: '',
+        status: 0,
+        isDeleted: false,
+        college: null,
+        sex: null,
+        grade: null,
+        address: null,
+        introduction: null,
+        createTime: null,
+        updateTime: null
     }),
 
     actions: {
@@ -19,8 +27,6 @@ export const useUserStore = defineStore('user', {
             try {
                 const res = await User.loginApi(loginData)
                 if (res.code === 200) {
-                    this.token = res.token
-                    setToken(res.token) // 持久化存储token
                     await this.getInfo() // 登录后自动获取用户信息
                 }
                 return res
@@ -33,13 +39,25 @@ export const useUserStore = defineStore('user', {
         async getInfo() {
             try {
                 const res = await User.getUserInfo()
-                if (res.code === 200) {
-                    const data = res.user
-                    this.userId = data.userId
-                    this.userName = data.userName
-                    this.roles = data.roles || []
-                    this.permissions = data.permissions || []
-                    this.avatar = data.avatar || ''
+                if (res.code === 200 && res.data?.user) {
+                    const userData = res.data.user
+                    this.$patch({
+                        id: userData.id,
+                        username: userData.username,
+                        phone: userData.phone,
+                        email: userData.email,
+                        role: userData.role,
+                        avatar: userData.avatar,
+                        status: userData.status,
+                        isDeleted: userData.isDeleted,
+                        college: userData.college,
+                        sex: userData.sex,
+                        grade: userData.grade,
+                        address: userData.address,
+                        introduction: userData.introduction,
+                        createTime: userData.createTime,
+                        updateTime: userData.updateTime
+                    })
                 }
                 return res
             } catch (error) {
@@ -51,33 +69,42 @@ export const useUserStore = defineStore('user', {
         async logout() {
             try {
                 await User.logoutApi()
-                this.resetToken()
+                this.resetUser()
                 return Promise.resolve()
             } catch (error) {
                 return Promise.reject(error)
             }
         },
 
-        // 重置token
-        resetToken() {
-            this.token = ''
-            this.roles = []
-            this.permissions = []
-            removeToken()
+        // 重置用户信息
+        resetUser() {
+            this.$reset()
         }
     },
 
     getters: {
         // 获取简化的用户信息
-        simpleInfo: (state) => {
-            return {
-                userId: state.userId,
-                userName: state.userName,
-                avatar: state.avatar
-            }
-        },
+        simpleInfo: (state) => ({
+            id: state.id,
+            username: state.username,
+            avatar: state.avatar,
+            role: state.role,
+            status: state.status
+        }),
 
-        // 判断是否登录
-        isLogin: (state) => !!state.token
+        // 判断是否登录（根据用户ID）
+        isLogin: (state) => !!state.id,
+
+        // // 用户角色显示
+        // roleName: (state) => {
+        //     const roles = {
+        //         0: '普通用户',
+        //         1: '管理员',
+        //         2: '教师',
+        //         3: '学生'
+        //         // 根据实际角色定义扩展
+        //     }
+        //     return roles[state.role] || '未知角色'
+        // }
     }
 })

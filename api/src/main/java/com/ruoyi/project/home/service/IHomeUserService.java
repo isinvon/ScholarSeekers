@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface IHomeUserService extends IService<User> {
 
+
     boolean updateUserStatus(Integer userId, User.Status status);
 
     boolean updateAvatar(Integer userId, String avatarUrl);

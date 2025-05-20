@@ -162,7 +162,7 @@ class Request {
         }
 
         const finalConfig = {...requestConfig, ...config};
-        return (await this.axiosInstance.post(url, data, finalConfig)).data;
+        return await this.axiosInstance.post(url, data, finalConfig);
     }
 
     /**

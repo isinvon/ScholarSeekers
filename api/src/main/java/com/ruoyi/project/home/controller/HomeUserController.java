@@ -1,15 +1,14 @@
 package com.ruoyi.project.home.controller;
 
-import com.ruoyi.common.constant.Constants;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.common.domain.User;
 import com.ruoyi.project.home.domain.dto.LoginRequestDTO;
-import com.ruoyi.project.home.domain.dto.TokenRequestDTO;
 import com.ruoyi.project.home.domain.vo.UserVO;
-import com.ruoyi.project.home.service.IAuthService;
+import com.ruoyi.project.home.other.utils.UserContextHolder;
 import com.ruoyi.project.home.service.IHomeUserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.validation.annotation.Validated;
@@ -24,16 +23,22 @@ public class HomeUserController extends BaseController {
 
     @Resource
     private IHomeUserService homeUserService;
+
     @Resource
-    private IAuthService authService;
+    private UserContextHolder userContextHolder;
+
 
     /**
      * 用户登录（新）
      */
     @PostMapping("/auth/login")
     public AjaxResult login(@RequestBody LoginRequestDTO loginRequest) {
-        String token = authService.login(loginRequest.getUsername(), loginRequest.getPassword());
-        return AjaxResult.success("登录成功").put(Constants.TOKEN, token);
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<User>();
+        lambdaQueryWrapper.eq(User::getUsername, loginRequest.getUsername());
+        lambdaQueryWrapper.eq(User::getPassword, loginRequest.getPassword());
+        User user = homeUserService.getOne(lambdaQueryWrapper);
+        userContextHolder.setCurrentUserId(user.getId());
+        return AjaxResult.success("登录成功", user);
     }
 
     /**
@@ -72,7 +77,7 @@ public class HomeUserController extends BaseController {
      */
     @PostMapping("/auth/logout")
     public AjaxResult logout() {
-        authService.logout(SecurityUtils.getUsername());
+        userContextHolder.clear();
         return AjaxResult.success("退出成功");
     }
 
@@ -141,6 +146,7 @@ public class HomeUserController extends BaseController {
     }
 
     private String generateDefaultUsername(String phone) {
-        return "用户" + phone.substring(0, 3) + "***" + phone.substring(7);
+        // return "用户" + phone.substring(0, 3) + "***" + phone.substring(7);
+        return phone;
     }
 }
