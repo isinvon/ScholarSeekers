@@ -101,4 +101,13 @@ public class CategoryController extends BaseController
     {
         return toAjax(categoryService.deleteCategoryByIds(ids));
     }
+
+
+    /**
+     * 获取分类树形数据
+     */
+    @GetMapping("/tree")
+    public AjaxResult getTree() {
+        return success(categoryService.getCategoryTree());
+    }
 }

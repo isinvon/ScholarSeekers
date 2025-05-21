@@ -42,3 +42,12 @@ export function delCategory(id) {
     method: 'delete'
   })
 }
+
+// 查询分类树结构
+export function getCategoryTree() {
+  return request({
+    url: '/admin/category/tree',
+    method: 'get'
+  })
+}
+

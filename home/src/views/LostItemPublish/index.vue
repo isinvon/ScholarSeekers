@@ -14,15 +14,21 @@
               <el-select
                   v-model="form.categoryId"
                   placeholder="请选择分类"
-                  style="width: 100%"
+                  filterable
                   clearable
+                  style="width: 100%"
               >
                 <el-option
                     v-for="item in categoryList"
                     :key="item.id"
-                    :label="item.name"
+                    :label="item.fullName"
                     :value="item.id"
-                />
+                >
+                  <span style="float: left">{{ item.fullName }}</span>
+                  <span style="float: right; color: #8492a6; font-size: 13px">
+      (ID: {{ item.id }})
+    </span>
+                </el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -69,14 +75,12 @@
         <!-- 图片上传 -->
         <el-form-item label="物品图片">
           <el-upload
-              :on-remove="handleRemove"
-              list-type="picture-card"
-              :file-list="fileList"
-              :limit="3"
-              :on-exceed="handleExceed"
-              :on-success="handleUploadSuccess"
+              :http-request="customUpload"
               :before-upload="beforeUpload"
-              :action="uploadUrl"
+              :on-remove="handleRemove"
+              :limit="3"
+              :file-list="fileList"
+              list-type="picture-card"
           >
             <i class="el-icon-plus"></i>
           </el-upload>
@@ -112,9 +116,11 @@
 import {onMounted, reactive, ref} from 'vue'
 import {ElMessage} from 'element-plus'
 import {useUserStore} from '@/store/user'
-import {getCategoryList} from '@/api/category'
-import {createLostItem} from '@/api/lostItem'
-import dayjs from "dayjs";
+import {getCategoryList, getCategoryList1} from '@/api/category'
+// 新增上传接口引用
+import {createLostItem, uploadFile} from '@/api/lostItemPublish'
+
+const formRef = ref(null)
 
 // 用户信息
 const userStore = useUserStore()
@@ -155,34 +161,46 @@ const categoryList = ref([])
 const fileList = ref([])
 // 提交状态
 const submitting = ref(false)
-// 上传配置
-const uploadUrl = `${process.env.VITE_API_BASE}/upload`
 
+// 修改分类数据加载逻辑
 onMounted(async () => {
   try {
-    // 添加查询参数，获取parentId为null的顶级分类
-    const res = await getCategoryList({parentId: null})
-    console.log('分类加载成功:', res)
-    categoryList.value = res.rows // 注意若依默认返回数据字段是rows
+
+    console.log('开始加载分类数据...')
+
+    // 添加try-catch块捕获异步错误
+    // const res = await getCategoryList({
+    //   parentId: null,
+    //   pageSize: 1000,  // 获取所有分类
+    //   pageNum: 1
+    // })
+
+    const res = await getCategoryList({})
+
+    // 若依分页接口返回结构验证
+    console.log('分类接口响应:', res) // 调试输出
+
+    if (res.code === 200) {
+      // 修正数据结构访问路径
+      const rawData = res.rows || []
+
+      // 处理前数据验证
+      console.log('原始分类数据:', rawData)
+
+      categoryList.value = processCategories(rawData)
+
+      // 处理后数据验证
+      console.log('处理后的分类数据:', categoryList.value)
+    } else {
+      ElMessage.error('分类数据加载失败: ' + (res.msg || '未知错误'))
+    }
   } catch (error) {
-    ElMessage.error('获取分类失败')
-    console.error('分类加载错误:', error)
+    console.error('分类加载异常:', error)
+    ElMessage.error('分类加载失败: ' + (error.message || '网络异常'))
   }
 })
 
-// 图片上传处理
-const handleUploadSuccess = (response, file) => {
-  if (response.code === 200) {
-    // 若依默认上传返回格式
-    const newUrl = response.url
-    if (form.imageUrl) {
-      form.imageUrl += ',' + newUrl
-    } else {
-      form.imageUrl = newUrl
-    }
-    fileList.value.push({url: newUrl})
-  }
-}
+
 
 // 添加删除图片处理
 const handleRemove = (file) => {
@@ -193,31 +211,28 @@ const handleRemove = (file) => {
   }
 }
 
-const submitForm = async () => {
-  // 添加表单验证
-  if (!formRef) return
-  const valid = await formRef.validate()
-  if (!valid) return
 
-  submitting.value = true
+// 提交表单（优化版）
+const submitForm = async () => {
   try {
+    await formRef.value.validate()
+
     const payload = {
       ...form,
       publisherId: userStore.userId,
       status: 0,
-      // 确保时间格式正确
-      lostTime: form.lostTime ? dayjs(form.lostTime).format('YYYY-MM-DD HH:mm:ss') : null
+      lostTime: form.lostTime || null,
+      // 转换路径为相对地址
+      imageUrl: form.imageUrl
     }
 
     const {code} = await createLostItem(payload)
     if (code === 200) {
       ElMessage.success('提交成功')
       resetForm()
-    } else {
-      ElMessage.error('提交失败')
     }
   } catch (error) {
-    console.error('提交错误:', error)
+    console.error('提交失败:', error)
     ElMessage.error(error.msg || '提交失败')
   } finally {
     submitting.value = false
@@ -243,6 +258,66 @@ const handleExceed = () => {
   ElMessage.warning('最多上传3张图片')
 }
 
+const processCategories = (list) => {
+  const categoryMap = new Map()
+
+  // 建立ID映射
+  list.forEach(item => {
+    categoryMap.set(item.id, {
+      ...item,
+      fullName: item.name,
+      level: 0
+    })
+  })
+
+  // 构建层级名称
+  categoryMap.forEach(item => {
+    let parent = categoryMap.get(item.parentId)
+    let current = item
+    while (parent) {
+      current.fullName = `${parent.name} / ${current.fullName}`
+      parent = categoryMap.get(parent.parentId)
+    }
+  })
+
+  return Array.from(categoryMap.values())
+      .sort((a, b) => a.fullName.localeCompare(b.fullName))
+}
+
+// 图片上传处理（最终版）
+const customUpload = async (options) => {
+  try {
+    // 关键修改2：直接传递文件对象，不手动创建FormData
+    const res = await uploadFile(options.file)
+
+    if (res.code === 200) {
+      // 处理返回路径
+      const newUrl = res.fileName // 使用fileName字段
+
+      // 更新表单字段
+      form.imageUrl = form.imageUrl
+          ? `${form.imageUrl},${newUrl}`
+          : newUrl
+
+      // 更新文件列表显示
+      fileList.value.push({
+        uid: options.file.uid,
+        name: options.file.name,
+        url: newUrl
+      })
+
+      // 必须调用onSuccess回调
+      options.onSuccess(res)
+    }
+  } catch (error) {
+    // 错误处理
+    ElMessage.error('上传失败: ' + (error.msg || error.message))
+    // 必须调用onError回调
+    options.onError(error)
+  }
+}
+
+
 // 表单重置
 const resetForm = () => {
   Object.assign(form, {
@@ -259,53 +334,5 @@ const resetForm = () => {
 </script>
 
 <style scoped lang="less">
-.lost-item-publish {
-  padding: 20px;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.form-card {
-  background-color: #fdfdfd;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: box-shadow 0.3s ease;
-
-  &:hover {
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-  }
-}
-
-.el-form-item {
-  margin-bottom: 20px;
-}
-
-.el-input {
-  border-radius: 8px;
-}
-
-.el-upload {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-}
-
-.image-uploader .el-upload-list {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-}
-
-.el-button {
-  margin-left: 10px;
-}
-
-.form-buttons {
-  margin-top: 30px; /* 添加顶部间距，避免按钮贴近其他元素 */
-}
-
-.el-dialog__body img {
-  border-radius: 8px;
-}
+@import "./index";
 </style>

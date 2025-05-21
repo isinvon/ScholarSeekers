@@ -60,4 +60,9 @@ public interface ICategoryService extends IService<Category>
      * @return 结果
      */
     public int deleteCategoryById(Integer id);
+
+    /**
+     * 获取分类树形结构
+     */
+    List<Category> getCategoryTree();
 }
