@@ -1,230 +1,176 @@
-<!--个人资料表单-->
 <template>
-  <!--控制卡片大小按钮-->
-  <!--<el-radio-group v-model="size" style="float: right">-->
-  <!--  <el-radio value="large">Large</el-radio>-->
-  <!--  <el-radio value="default">Default</el-radio>-->
-  <!--  <el-radio value="small">Small</el-radio>-->
-  <!--</el-radio-group>-->
-  <div class="cell-item">
+  <div class="profile-container">
+    <div class="profile-header">
+      <el-avatar :size="120" :src="user.avatar || 'https://dummyimage.com/100x100/999/fff'">
+        <template #error>
+          <div class="avatar-error">头像加载失败</div>
+        </template>
+      </el-avatar>
+      <div class="profile-meta">
+        <h1>{{ displayName }}</h1>
+        <p class="account-id">用户ID: {{ user.id }}</p>
+      </div>
+    </div>
+
+    <el-descriptions title="基本信息" :column="2" border>
+      <el-descriptions-item label="用户名">
+        {{ user.username }}
+      </el-descriptions-item>
+
+      <el-descriptions-item label="性别">
+        <el-tag :type="genderTagType">
+          {{ genderText }}
+        </el-tag>
+      </el-descriptions-item>
+
+      <el-descriptions-item label="注册时间">
+        {{ formatDate(user.createTime) }}
+      </el-descriptions-item>
+
+      <el-descriptions-item label="最后更新时间">
+        {{ formatDate(user.updateTime) }}
+      </el-descriptions-item>
+
+      <el-descriptions-item label="手机号">
+        {{ user.phone || '未绑定' }}
+      </el-descriptions-item>
+
+      <el-descriptions-item label="学院">
+        {{ user.college || '未设置' }}
+      </el-descriptions-item>
+
+      <el-descriptions-item label="年级">
+        {{ user.grade || '未设置' }}
+      </el-descriptions-item>
+
+      <el-descriptions-item label="地址" :span="2">
+        {{ user.address || '未设置' }}
+      </el-descriptions-item>
+    </el-descriptions>
+
+    <div class="description-section" v-if="user.introduction">
+      <h3>个人简介</h3>
+      <p class="description-content">
+        {{ user.introduction }}
+      </p>
+    </div>
   </div>
-  <!--阴影环绕-->
-  <el-avatar class="avatar" :size="100" :src="props.data.avatar"/>
-  <el-descriptions
-      class="margin-top"
-      title=""
-      :column="1"
-      :size="size"
-      border
-  >
-    <!--操作按钮-->
-    <!--<template #extra>-->
-    <!--  <el-button type="primary">Operation</el-button>-->
-    <!--</template>-->
-
-    <!--圆形头像-->
-    <!--<el-descriptions-item>-->
-    <!--  <template #label>-->
-    <!--    <div class="cell-item">-->
-    <!--      &lt;!&ndash;<el-icon :style="iconStyle">&ndash;&gt;-->
-    <!--      &lt;!&ndash;  <user/>&ndash;&gt;-->
-    <!--      &lt;!&ndash;</el-icon>&ndash;&gt;-->
-    <!--      &lt;!&ndash;头像&ndash;&gt;-->
-    <!--    </div>-->
-    <!--  </template>-->
-    <!--  <el-avatar :size="100" :src="props.data.avatar"/>-->
-    <!--</el-descriptions-item>-->
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <el-icon :style="iconStyle">
-            <user/>
-          </el-icon>
-          姓名
-        </div>
-      </template>
-      {{ props.data.name }}
-    </el-descriptions-item>
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <el-icon :style="iconStyle">
-            <user/>
-          </el-icon>
-          性别
-        </div>
-      </template>
-      <!--标签：如果性别为女,则显示粉色♀,否则显示蓝色♂-->
-      <el-tag v-if="props.data.sex === '女'" size="small" type="danger">♀</el-tag>
-      <el-tag v-else size="small" type="primary">♂</el-tag>
-      {{ props.data.sex }}
-    </el-descriptions-item>
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <el-icon :style="iconStyle">
-            <user/>
-          </el-icon>
-          年龄
-        </div>
-      </template>
-      {{ props.data.age }}
-    </el-descriptions-item>
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <el-icon :style="iconStyle">
-            <user/>
-          </el-icon>
-          出生日期
-        </div>
-      </template>
-      {{ props.data.birthdate }}
-    </el-descriptions-item>
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <el-icon :style="iconStyle">
-            <iphone/>
-          </el-icon>
-          手机号
-        </div>
-      </template>
-      {{ props.data.phone }}
-    </el-descriptions-item>
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <el-icon :style="iconStyle">
-            <user/>
-          </el-icon>
-          邮箱
-        </div>
-      </template>
-      {{ props.data.email }}
-    </el-descriptions-item>
-
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <el-icon :style="iconStyle">
-            <tickets/>
-          </el-icon>
-          学院
-        </div>
-      </template>
-      <el-tag size="small">{{ props.data.college }}</el-tag>
-    </el-descriptions-item>
-
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <el-icon :style="iconStyle">
-            <tickets/>
-          </el-icon>
-          专业班级
-        </div>
-      </template>
-      <el-tag size="small">{{ props.data.major }} {{ props.data.class }}</el-tag>
-    </el-descriptions-item>
-
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <el-icon :style="iconStyle">
-            <user/>
-          </el-icon>
-          标签
-        </div>
-      </template>
-      <!--props.data.tags是一个['nice', 'developer']类型的数组,将其遍历渲染为标签-->
-      <el-tag v-for="(tag, index) in props.data.tags" :key="index" style="margin-right: 10px">
-        {{ tag }}
-      </el-tag>
-    </el-descriptions-item>
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <el-icon :style="iconStyle">
-            <office-building/>
-          </el-icon>
-          家庭住址
-        </div>
-      </template>
-      {{ props.data.address }}
-    </el-descriptions-item>
-    <el-descriptions-item>
-      <template #label>
-        <div class="cell-item">
-          <el-icon :style="iconStyle">
-            <user/>
-          </el-icon>
-          个人介绍
-        </div>
-      </template>
-      {{ props.data.introduction }}
-    </el-descriptions-item>
-  </el-descriptions>
-
 </template>
 
-<script setup lang="js">
+<script setup>
+import { ref, computed } from 'vue'
+import dayjs from 'dayjs'
+import User from '@/api/user'
 
-import {computed, ref} from 'vue'
-import {
-  Iphone,
-  Location,
-  OfficeBuilding,
-  Tickets,
-  User,
-} from '@element-plus/icons-vue'
 
-const props = defineProps({
-  data: {
-    type: Object,
-    default: () => ({
-      name: '刘禹锡',
-      age: 18,
-      sex: '女',
-      college: '计算机科学与工程学院',
-      major: '网络工程',
-      class: '21-2班',
-      address: '牡丹省樱花市雨花区莲花街道55号',
-      birthdate: '2002-10-03',
-      tags: ['好学生', '优秀开发者', '超牛黑客', 'Github大牛'],
-      phone: '123456789',
-      email: '123456789@qq.com',
-      introduction: '老子从不听天由命，尊从本心。',
-      avatar: 'https://picsum.photos/200/200',
-    }),
-  },
+const user = ref({
+  id: 4,
+  username: "15677141741",
+  sex: null,
+  avatar: null,      // 移除重复的 avatar 属性
+  introduction: null,
+  address: null,
+  birthday: null,
+  college: null,
+  createBy: null,
+  createTime: "2025-05-20 11:28:19",
+  updateBy: null,
+  updateTime: "2025-05-20 11:28:19",
+  email: null,
+  grade: null,
+  isDeleted: false,
+  password: "linxinhuan123",
+  phone: "15677141741",
+  remark: null,
+  role: 0,
+  status: 0,
+  tag: null
 })
 
-const size = ref('default')
+// 计算属性
+const displayName = computed(() => {
+  return user.value.username || `用户_${user.value.id.slice(0, 6)}`
+})
 
-const iconStyle = computed(() => {
-  const marginMap = {
-    large: '8px',
-    default: '6px',
-    small: '4px',
-  }
-  return {
-    marginRight: marginMap[size.value] || marginMap.default,
-  }
+const genderText = computed(() => {
+  const genderMap = { 0: '男', 1: '女' }
+  return user.value.sex !== null ? genderMap[user.value.sex] : '未设置'
 })
-const blockMargin = computed(() => {
-  const marginMap = {
-    large: '32px',
-    default: '28px',
-    small: '24px',
-  }
-  return {
-    marginTop: marginMap[size.value] || marginMap.default,
-  }
+
+const genderTagType = computed(() => {
+  return user.value.sex === 1 ? 'danger' : 'primary'
 })
+
+// 方法
+const formatDate = (dateStr) => {
+  return dateStr ? dayjs(dateStr).format('YYYY-MM-DD HH:mm') : '--'
+}
+
+const loadUserInfo = async () => {
+  try {
+    const res = await User.getUserInfo()
+    if (res.code === 200) {
+      user.value = res.data.user
+    }
+  } catch (error) {
+    console.error('加载用户信息失败:', error)
+  }
+}
+
+// 初始化加载
+loadUserInfo()
 </script>
 
 <style lang="less" scoped>
-@import url('./index.less');
+.profile-container {
+  .profile-header {
+    position: relative;
+    padding: 30px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border-radius: 12px;
+    margin-bottom: 40px;
 
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 96%;
+      height: 1px;
+      background: #ebeef5;
+    }
+  }
+
+  :deep(.el-descriptions) {
+    margin-top: 40px;
+    
+    &__title {
+      font-size: 20px;
+      color: #303133;
+      margin-bottom: 25px;
+    }
+
+    &__header {
+      .el-descriptions__label {
+        font-weight: 500;
+        color: #606266;
+      }
+    }
+  }
+
+  .description-section {
+    margin-top: 40px;
+    padding: 25px;
+    background: #f8fafc;
+    border: 1px solid #e4e7ed;
+    border-radius: 8px;
+
+    h3 {
+      font-size: 16px;
+      color: #303133;
+      margin-bottom: 15px;
+    }
+  }
+}
 </style>

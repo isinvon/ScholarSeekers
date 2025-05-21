@@ -1,52 +1,63 @@
 <template>
-  <div>
-    <!-- 使用v-if控制个人资料表单的显示 -->
-    <PersonalForm v-if="!isEditing" style="padding-top: 50px"/>
-
-    <!-- router-view根据编辑状态显示或隐藏 -->
-    <router-view v-if="isEditing"></router-view>
-
-    <!--换一行-->
-    <br>
-
-    <!-- 编辑按钮，仅在未编辑时显示 -->
-    <el-button v-if="!isEditing" type="primary" @click="edit">
-      编辑
+  <div class="personal-center-container">
+    <!-- 添加返回按钮 -->
+    <el-button
+      v-if="$route.name !== 'Profile'"
+      type="text"
+      class="back-btn"
+      @click="router.go(-1)"
+      v-show="$route.name !== 'Profile'"
+    >
+      <el-icon><ArrowLeft /></el-icon> 返回
     </el-button>
 
-    <!-- 返回按钮，仅在编辑模式时显示 -->
-    <!--<el-button v-if="isEditing" type="primary" @click="returnToProfile">-->
-    <!--  返回-->
-    <!--</el-button>-->
+    <el-button
+      type="primary"
+      @click="router.push({ name: 'EditProfile' })"
+      v-show="$route.name !== 'EditProfile'"
+      icon="Edit"
+    >
+      编辑资料
+    </el-button>
+
+    <router-view @refresh="handleRefresh" />
   </div>
 </template>
 
 <script setup>
-
-import PersonalForm from './components/PersonalForm';
-import {useRouter} from 'vue-router';
-import {ref} from "vue";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { ArrowLeft } from "@element-plus/icons-vue"; // 添加图标
 
 const router = useRouter();
-const isEditing = ref(false); // 新增一个响应式变量来控制编辑状态
+const refreshKey = ref(0);
 
-const edit = () => {
-  // 切换到编辑状态，隐藏表单，显示编辑界面
-  isEditing.value = true;
-  // 跳转到编辑页面逻辑可以保留，但根据情况可能不需要
-  router.push('/personalCenter/edit');
+const handleRefresh = () => {
+  refreshKey.value++;
+  router.push({ name: "Profile" });
 };
-
-// const returnToProfile = () => {
-//   // 返回到查看个人资料状态，显示表单，隐藏编辑界面
-//   isEditing.value = false;
-//   // 如果需要，可以在此处添加逻辑来处理返回时的路由变化
-//   router.push('/personalCenter');
-// };
 </script>
 
-
 <style lang="less" scoped>
-@import url('./index.less');
+.personal-center-container {
+  position: relative; /* 为绝对定位按钮准备 */
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 40px; /* 增加内边距 */
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06); /* 更柔和的阴影 */
 
+  .back-btn {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    font-size: 14px;
+    color: #666;
+
+    &:hover {
+      color: #409eff;
+    }
+  }
+}
 </style>

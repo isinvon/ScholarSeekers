@@ -13,6 +13,10 @@ class User {
     getUserInfo(data) {
         return request.post('/home/user/getInfo', data)
     }
+    
+    editUserInfo(data) {
+        return request.post('/home/user/edit', data)
+    }
 }
 
 export default new User();
