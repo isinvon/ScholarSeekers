@@ -2,17 +2,17 @@
   <div v-loading="loading" class="lost-and-found-container">
     <div class="announcement-header">
       <SearchBox
-          class="announcement-search"
-          v-model="searchParams.keyword"
-          placeholder="搜索物品标题或描述"
-          :border-radius="12"
-          @search="fetchData"
+        class="announcement-search"
+        v-model="searchParams.keyword"
+        placeholder="搜索物品标题或描述"
+        :border-radius="12"
+        @search="fetchData"
       />
       <el-select
-          class="announcement-select"
-          v-model="searchParams.status"
-          placeholder="认领状态"
-          @change="handleStatusChange"
+        class="announcement-select"
+        v-model="searchParams.status"
+        placeholder="认领状态"
+        @change="handleStatusChange"
       >
         <el-option label="全部" value=""></el-option>
         <el-option label="待认领" value="0"></el-option>
@@ -24,12 +24,12 @@
     <el-row :gutter="20">
       <template v-if="paginatedItems.length > 0">
         <el-col
-            v-for="item in paginatedItems"
-            :key="item.id"
-            :xs="24"
-            :sm="12"
-            :md="8"
-            :lg="6"
+          v-for="item in paginatedItems"
+          :key="item.id"
+          :xs="24"
+          :sm="12"
+          :md="8"
+          :lg="6"
         >
           <el-card class="announcement-card" shadow="hover">
             <div class="card-header">
@@ -51,12 +51,12 @@
 
             <div class="item-content">
               <el-image
-                  class="announcement-image"
-                  :src="getImageUrl(item.imageUrl)"
-                  fit="cover"
-                  style="width: 100px; height: 100px;"
-                  :preview-src-list="[getImageUrl(item.imageUrl)]"
-                  hide-on-click-modal
+                class="announcement-image"
+                :src="getImageUrl(item.imageUrl)"
+                fit="cover"
+                style="width: 100px; height: 100px"
+                :preview-src-list="[getImageUrl(item.imageUrl)]"
+                hide-on-click-modal
               >
                 <template #error>
                   <div class="image-error">图片加载失败</div>
@@ -82,16 +82,13 @@
                 </el-tooltip>
               </div>
               <div class="item-actions">
-                <el-button
-                    size="mini"
-                    @click="handleEdit(item.id)"
-                >
+                <el-button size="mini" @click="handleEdit(item.id)">
                   编辑
                 </el-button>
                 <el-button
-                    type="danger"
-                    size="mini"
-                    @click="handleDelete(item.id)"
+                  type="danger"
+                  size="mini"
+                  @click="handleDelete(item.id)"
                 >
                   删除
                 </el-button>
@@ -100,83 +97,79 @@
           </el-card>
         </el-col>
       </template>
-      <el-empty v-else description="暂无失物记录"/>
+      <el-empty v-else description="暂无失物记录" />
     </el-row>
 
     <el-pagination
-        v-if="total > 0"
-        background
-        layout="total, sizes, prev, pager, next"
-        :page-sizes="[12, 24, 48]"
-        :current-page="pagination.page"
-        :page-size="pagination.size"
-        :total="total"
-        @current-change="handlePageChange"
-        @size-change="handleSizeChange"
+      v-if="total > 0"
+      background
+      layout="total, sizes, prev, pager, next"
+      :page-sizes="[12, 24, 48]"
+      :current-page="pagination.page"
+      :page-size="pagination.size"
+      :total="total"
+      @current-change="handlePageChange"
+      @size-change="handleSizeChange"
     />
 
-
-      <!-- 添加编辑对话框 -->
-    <EditDialog 
-    v-model="editDialogVisible"
-    :initial-data="currentItem"
-    @submit="handleEditSubmit"
-  />
+    <!-- 添加编辑对话框 -->
+    <EditDialog
+      v-model="editDialogVisible"
+      :initial-data="currentItem"
+      @submit="handleEditSubmit"
+    />
   </div>
 </template>
 
 <script setup>
-import {ref, computed, onMounted} from 'vue';
-import {ElMessage, ElMessageBox} from 'element-plus';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import { 
-  lostItemListForCurrentUser, 
-  editLostItem
-} from '@/api/lostItem';
+import { ref, computed, onMounted } from "vue";
+import { ElMessage, ElMessageBox } from "element-plus";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import {
+  lostItemListForCurrentUser,
+  editLostItem,
+  deleteLostItem,
+} from "@/api/lostItem";
 // 新增导入
-import EditDialog from './editDialog/index';
+import EditDialog from "./editDialog/index";
 
 dayjs.extend(relativeTime);
-
-
 
 // 新增响应式数据
 const editDialogVisible = ref(false);
 const currentItem = ref({});
 
-
 // 状态映射配置
 const statusTextMap = {
-  0: '待认领',
-  1: '已认领',
-  2: '已关闭'
+  0: "待认领",
+  1: "已认领",
+  2: "已关闭",
 };
 
 const statusTypeMap = {
-  0: 'warning',
-  1: 'success',
-  2: 'info'
+  0: "warning",
+  1: "success",
+  2: "info",
 };
 
 // 分页参数
 const pagination = ref({
   page: 1,
-  size: 12
+  size: 12,
 });
 
 // 搜索参数
 const searchParams = ref({
-  keyword: '',
-  status: ''
+  keyword: "",
+  status: "",
 });
-
 
 // 状态标签映射方法
 const getStatusTag = (status) => {
   return {
-    text: statusTextMap[status] || '未知状态',
-    type: statusTypeMap[status] || 'danger'
+    text: statusTextMap[status] || "未知状态",
+    type: statusTypeMap[status] || "danger",
   };
 };
 
@@ -197,18 +190,18 @@ const fetchData = async () => {
     loading.value = true;
     const res = await lostItemListForCurrentUser();
     if (res.code === 200) {
-      items.value = res.data.map(item => ({
+      items.value = res.data.map((item) => ({
         ...item,
         date: new Date(item.createTime),
         tag: getStatusTag(item.status).text,
         tagType: getStatusTag(item.status).type,
-        content: item.description || '暂无详细描述',
-        imageUrl: item.imageUrl // 直接使用后端返回的路径
+        content: item.description || "暂无详细描述",
+        imageUrl: item.imageUrl, // 直接使用后端返回的路径
       }));
     }
   } catch (error) {
-    console.error('数据加载失败:', error);
-    ElMessage.error('数据加载失败');
+    console.error("数据加载失败:", error);
+    ElMessage.error("数据加载失败");
   } finally {
     loading.value = false;
   }
@@ -233,13 +226,13 @@ const handleStatusChange = () => {
 };
 
 // 时间格式化
-const formatDate = (date) => dayjs(date).format('YYYY-MM-DD');
+const formatDate = (date) => dayjs(date).format("YYYY-MM-DD");
 
 // 相对时间计算
 const timeSince = (date) => {
   const now = dayjs();
   const target = dayjs(date);
-  const diff = now.diff(target, 'second');
+  const diff = now.diff(target, "second");
 
   if (diff < 60) return `${diff}秒前`;
   if (diff < 3600) return `${Math.floor(diff / 60)}分钟前`;
@@ -249,20 +242,17 @@ const timeSince = (date) => {
 
 // 文本截断
 const truncateText = (text, maxLength) => {
-  if (!text) return '暂无描述';
-  return text.length > maxLength
-      ? `${text.substring(0, maxLength)}...`
-      : text;
+  if (!text) return "暂无描述";
+  return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
 };
 
-
 const handleEdit = (id) => {
-  const target = items.value.find(item => item.id === id);
+  const target = items.value.find((item) => item.id === id);
   if (target) {
     currentItem.value = {
       ...target,
       // 转换时间格式（如果后端需要特定格式）
-      lostTime: dayjs(target.lostTime).format('YYYY-MM-DD')
+      lostTime: dayjs(target.lostTime).format("YYYY-MM-DD"),
     };
     editDialogVisible.value = true;
   }
@@ -274,15 +264,55 @@ const handleEditSubmit = async (formData) => {
     const { code } = await editLostItem({
       ...formData,
       // 转换时间类型（根据后端要求）
-      lostTime: new Date(formData.lostTime).toISOString()
+      lostTime: new Date(formData.lostTime).toISOString(),
     });
-    
+
     if (code === 200) {
-      ElMessage.success('修改成功');
+      ElMessage.success("修改成功");
       fetchData(); // 刷新数据
     }
   } catch (error) {
-    ElMessage.error(error.msg || '修改失败');
+    ElMessage.error(error.msg || "修改失败");
+  }
+};
+
+// 添加删除处理函数
+const handleDelete = async (id) => {
+  try {
+    // 确认对话框
+    await ElMessageBox.confirm('确定要删除该记录吗？', '警告', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    });
+
+    // 获取完整数据项
+    const targetItem = items.value.find(item => item.id === id);
+    if (!targetItem) {
+      ElMessage.error('未找到该记录');
+      return;
+    }
+
+    // 构造删除参数（根据后端要求）
+    const deleteParams = {
+      ...targetItem,
+      isDeleted: true
+    };
+
+    // 调用删除接口
+    const { code, msg } = await deleteLostItem(deleteParams);
+    
+    if (code === 200) {
+      ElMessage.success(msg || '删除成功');
+      fetchData(); // 刷新数据
+    } else {
+      ElMessage.error(msg || '删除失败');
+    }
+  } catch (error) {
+    // 用户取消删除时 error === 'cancel'
+    if (error !== 'cancel') {
+      ElMessage.error('删除操作失败');
+    }
   }
 };
 

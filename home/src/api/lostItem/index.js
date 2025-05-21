@@ -21,3 +21,12 @@ export function lostItemListForCurrentUser(data) {
 export function editLostItem(data) {
     return request.post('/home/lostItem/edit', data)
 }
+
+/**
+ * 删除失物
+ * @param data
+ * @returns {Promise<Object>}
+ */
+export function deleteLostItem(data) {
+    return request.post('/home/lostItem/delete', data)
+}

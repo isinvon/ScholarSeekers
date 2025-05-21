@@ -36,6 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="publisherId != null "> and publisher_id = #{publisherId}</if>
             <if test="imageUrl != null  and imageUrl != ''"> and image_url = #{imageUrl}</if>
             <if test="contactInfo != null  and contactInfo != ''"> and contact_info = #{contactInfo}</if>
+            <if test="isDeleted != null "> and is_deleted = #{isDeleted}</if>
         </where>
     </select>
     

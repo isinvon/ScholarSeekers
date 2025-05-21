@@ -72,4 +72,21 @@ public class HomeLostItemController extends BaseController {
                 AjaxResult.success("编辑成功") :
                 AjaxResult.error("编辑失败");
     }
+
+    /**
+     * 删除 (软)
+     *
+     * @param lostItem
+     * @return
+     */
+    @PostMapping("/delete")
+    public AjaxResult delete(@RequestBody LostItem lostItem) {
+        if (lostItem == null) {
+            return AjaxResult.error("删除信息不能为空");
+        }
+        lostItem.setIsDeleted(true);
+        return lostItemService.updateById(lostItem) ?
+                AjaxResult.success("删除成功") :
+                AjaxResult.error("删除失败");
+    }
 }

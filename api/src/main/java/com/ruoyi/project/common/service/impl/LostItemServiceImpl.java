@@ -40,6 +40,7 @@ public class LostItemServiceImpl extends ServiceImpl<LostItemMapper, LostItem> i
      */
     @Override
     public List<LostItem> selectLostItemList(LostItem lostItem) {
+        lostItem.setIsDeleted(false); // 只查询未删除的数据
         return lostItemMapper.selectLostItemList(lostItem);
     }
 
