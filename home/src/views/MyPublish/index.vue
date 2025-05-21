@@ -1,353 +1,427 @@
-<!--我的发布-->
-
-
-<!--竖着的-->
-
-<!--<template>-->
-<!--  <div class="lost-and-found-container">-->
-<!--    &lt;!&ndash;<h2 class="page-title">我的失物招领发布</h2>&ndash;&gt;-->
-<!--    &lt;!&ndash;搜索框&ndash;&gt;-->
-<!--    <el-input v-model="searchQuery" placeholder="搜索公告"></el-input>-->
-<!--    &lt;!&ndash;选择器筛选&ndash;&gt;-->
-<!--    <el-select v-model="selectedTag" placeholder="筛选类型">-->
-<!--      <el-option label="全部" value=""></el-option>-->
-<!--      <el-option label="失物招领" value="失物招领"></el-option>-->
-<!--      <el-option label="拾物启事" value="拾物启事"></el-option>-->
-<!--    </el-select>-->
-
-<!--    <el-row v-for="item in paginatedItems" :key="item.id"-->
-<!--            :class="['announcement-row', { 'highlight': expandedId === item.id }]">-->
-<!--      <el-card class="announcement-card" shadow="always">-->
-<!--        <div class="header">-->
-<!--          <h4 class="title">{{ item.title }}</h4>-->
-<!--          <el-tag :type="item.tagType" size="medium">{{ item.tag }}</el-tag>-->
-<!--        </div>-->
-<!--        <transition name="expand">-->
-<!--          <div class="content">-->
-<!--            <div v-if="expandedId === item.id" class="expanded">-->
-<!--              {{ item.content }}-->
-<!--            </div>-->
-<!--            <div v-else>-->
-<!--              {{ item.content.substring(0, 50) }}...-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </transition>-->
-
-<!--        <div class="meta">-->
-<!--          <small>{{ timeSince(item.date) }}</small>-->
-<!--          <el-button type="text" icon="caret-down" @click="toggleExpand(item.id)">-->
-<!--            {{ expandedId === item.id ? '收起' : '展开' }}-->
-<!--          </el-button>-->
-<!--        </div>-->
-<!--        <div class="actions">-->
-<!--          <el-button class="edit-btn" type="primary" icon="edit" size="small">编辑</el-button>-->
-<!--          <el-button class="delete-btn" type="danger" icon="delete" size="small">删除</el-button>-->
-<!--        </div>-->
-<!--      </el-card>-->
-<!--    </el-row>-->
-<!--    &lt;!&ndash;分页&ndash;&gt;-->
-<!--    <el-pagination-->
-<!--        class="announcement-pagination"-->
-<!--        v-model:current-page="currentPage"-->
-<!--        :page-size="pageSize"-->
-<!--        :total="filteredItems.length"-->
-<!--        layout="prev, pager, next">-->
-<!--    </el-pagination>-->
-<!--  </div>-->
-<!--</template>-->
-
-<!--横向顺序排布-->
-
 <template>
-  <div class="lost-and-found-container">
+  <div v-loading="loading" class="lost-and-found-container">
     <div class="announcement-header">
-      <!--搜索框 - 旧-->
-      <!--<el-input class="announcement-search" v-model="searchQuery" placeholder="搜索物品"></el-input>-->
-      <!--搜索框 - 新-->
-      <SearchBox class="announcement-search" v-model="searchQuery" placeholder="搜索物品" :border-radius="12"/>
-      <!--选择器筛选-->
-      <el-select class="announcement-select" v-model="selectedTag" placeholder="筛选类型">
+      <SearchBox
+          class="announcement-search"
+          v-model="searchParams.keyword"
+          placeholder="搜索物品标题或描述"
+          :border-radius="12"
+          @search="fetchData"
+      />
+      <el-select
+          class="announcement-select"
+          v-model="searchParams.status"
+          placeholder="认领状态"
+          @change="handleStatusChange"
+      >
         <el-option label="全部" value=""></el-option>
-        <el-option label="失物招领" value="失物招领"></el-option>
-        <el-option label="拾物启事" value="拾物启事"></el-option>
+        <el-option label="待认领" value="0"></el-option>
+        <el-option label="已认领" value="1"></el-option>
+        <el-option label="已关闭" value="2"></el-option>
       </el-select>
     </div>
 
     <el-row :gutter="20">
-      <el-col :xs="24" :sm="12" :md="8" :lg="6" v-for="item in paginatedItems" :key="item.id">
+      <template v-if="paginatedItems.length > 0">
+        <el-col
+            v-for="item in paginatedItems"
+            :key="item.id"
+            :xs="24"
+            :sm="12"
+            :md="8"
+            :lg="6"
+        >
+          <el-card class="announcement-card" shadow="hover">
+            <div class="card-header">
+              <el-tag class="item-id">#{{ item.id }}</el-tag>
+              <el-tag :type="statusTypeMap[item.status]">
+                {{ statusTextMap[item.status] }}
+              </el-tag>
+            </div>
 
-        <el-card class="announcement-card" shadow="always">
-          <div class="header">
-            <h4 class="title">
-              <div v-if="expandedTitleId === item.id" class="expanded">
-                <!--物品序号标签-->
-                <el-tag class="announcement-number" type="info" size="medium">{{ item.id }}</el-tag>
-                {{ item.title }}
+            <h3 class="item-title">
+              {{ item.title }}
+              <el-tooltip content="丢失时间" placement="top">
+                <span class="lost-time">
+                  <i class="el-icon-time"></i>
+                  {{ formatDate(item.lostTime) }}
+                </span>
+              </el-tooltip>
+            </h3>
+
+            <div class="item-content">
+              <el-image
+                  class="announcement-image"
+                  :src="getImageUrl(item.imageUrl)"
+                  fit="cover"
+                  style="width: 100px; height: 100px;"
+                  :preview-src-list="[getImageUrl(item.imageUrl)]"
+                  hide-on-click-modal
+              >
+                <template #error>
+                  <div class="image-error">图片加载失败</div>
+                </template>
+              </el-image>
+              <div class="item-desc">
+                {{ truncateText(item.description, 50) }}
               </div>
-              <div v-else>
-                <!--物品序号标签-->
-                <el-tag class="announcement-number" type="info" size="medium">{{ item.id }}</el-tag>
-                {{ item.title.substring(0,6) }}...
+            </div>
+
+            <div class="item-footer">
+              <div class="meta-info">
+                <el-tooltip content="丢失地点" placement="bottom">
+                  <span class="location">
+                    <i class="el-icon-location-outline"></i>
+                    {{ item.lostLocation }}
+                  </span>
+                </el-tooltip>
+                <el-tooltip content="发布时间" placement="bottom">
+                  <span class="create-time">
+                    {{ timeSince(item.createTime) }}
+                  </span>
+                </el-tooltip>
               </div>
-            </h4>
-            <!--物品类型标签-->
-            <el-tag class="announcement-tag lightning-button" :type="item.tagType" size="medium">{{ item.tag }}</el-tag>
-          </div>
-          <div class="announcement-content">
-            <!--图片-->
-            <el-image class="announcement-image" :src="item.imageUrl" fit="cover"
-                      style="width: 100px; height: 100px;"></el-image>
-            <!--内容-->
-            <transition name="expand">
-              <div class="content">
-                <div v-if="expandedContentId === item.id" class="expanded">
-                  {{ item.content }}
-                </div>
-                <div v-else>
-                  {{ item.content.substring(0, 20) }}...
-                </div>
+              <div class="item-actions">
+                <el-button
+                    size="mini"
+                    @click="handleEdit(item.id)"
+                >
+                  编辑
+                </el-button>
+                <el-button
+                    type="danger"
+                    size="mini"
+                    @click="handleDelete(item.id)"
+                >
+                  删除
+                </el-button>
               </div>
-            </transition>
-
-          </div>
-
-          <div class="meta">
-            <!--时间-->
-            <small class="announcement-time">{{ timeSince(item.date) }}</small>
-            <!--展开/收起-->
-            <el-button type="text" icon="caret-down" @click="toggleExpand(item.id)">
-              {{ expandedContentId === item.id ? '收起' : '展开' }}
-            </el-button>
-          </div>
-          <div class="actions">
-            <!--<el-button class="edit-btn" type="primary" icon="edit" size="small">编辑</el-button>-->
-            <el-button class="edit-btn" type="primary" size="small">编辑</el-button>
-            <!--<el-button class="delete-btn" type="danger" icon="delete" size="small">删除</el-button>-->
-            <el-button class="delete-btn" type="danger" size="small">删除</el-button>
-          </div>
-        </el-card>
-      </el-col>
-
+            </div>
+          </el-card>
+        </el-col>
+      </template>
+      <el-empty v-else description="暂无失物记录"/>
     </el-row>
-    <br>
-    <br>
-    <!--分页-->
+
     <el-pagination
-        class="announcement-pagination"
-        v-model:current-page="currentPage"
-        :page-size="pageSize"
-        :total="filteredItems.length"
-        layout="prev, pager, next">
-    </el-pagination>
+        v-if="total > 0"
+        background
+        layout="total, sizes, prev, pager, next"
+        :page-sizes="[12, 24, 48]"
+        :current-page="pagination.page"
+        :page-size="pagination.size"
+        :total="total"
+        @current-change="handlePageChange"
+        @size-change="handleSizeChange"
+    />
+
+
+      <!-- 添加编辑对话框 -->
+    <EditDialog 
+    v-model="editDialogVisible"
+    :initial-data="currentItem"
+    @submit="handleEditSubmit"
+  />
   </div>
 </template>
 
 <script setup>
-import {computed, ref} from 'vue';
-import SearchBox from "@/components/SearchBox/index.vue";
+import {ref, computed, onMounted} from 'vue';
+import {ElMessage, ElMessageBox} from 'element-plus';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import { 
+  lostItemListForCurrentUser, 
+  editLostItem
+} from '@/api/lostItem';
+// 新增导入
+import EditDialog from './editDialog/index';
 
-// 当前展开的ID
-const expandedContentId = ref(null);
-const expandedTitleId = ref(null);
+dayjs.extend(relativeTime);
 
-// 模拟数据
-const lostAndFoundItems = [
-  {
-    id: 1,
-    title: '寻找丢失的钱包',
-    tag: '失物招领',
-    tagType: 'primary',
-    content: '我在公园丢失了一个黑色钱失了一个黑色钱包，里面有重要证件和现金。',
-    priority: 'normal',
-    imageUrl: 'https://picsum.photos/100/100',
-    date: new Date()
-  },
-  {
-    id: 2,
-    title: '捡到一只宠物狗',
-    tag: '拾物启事',
-    tagType: 'success',
-    content: '在小区门口捡到一只可爱的宠物狗，希望主人尽快联系我。',
-    priority: 'low',
-    imageUrl: 'https://picsum.photos/100/100',
-    date: new Date()
-  },
-  {
-    id: 3,
-    title: '寻回我的手机',
-    tag: '失物招领',
-    tagType: 'primary',
-    content: '我的手机被偷了，希望有同学能帮我找回来。',
-    priority: 'high',
-    imageUrl: 'https://picsum.photos/100/100',
-    date: new Date()
-  },
-  {
-    id: 4,
-    title: '拾到一堆垃圾',
-    tag: '拾物启事',
-    tagType: 'success',
-    content: '在公园捡到了一堆垃圾，希望有同学能帮我收一下。',
-    priority: 'medium',
-    imageUrl: 'https://picsum.photos/100/100',
-    date: new Date()
-  },
-  {
-    id: 5,
-    title: '丢失我的钱包',
-    tag: '失物招领',
-    tagType: 'primary',
-    content: '我丢失了钱包，希望有同学能帮我找回来。',
-    priority: 'high',
-    imageUrl: 'https://picsum.photos/100/100',
-    date: new Date()
-  },
-  {
-    id: 6,
-    title: '拾到一堆垃圾',
-    tag: '拾物启事',
-    tagType: 'success',
-    content: '在公园捡到了一堆垃圾，希望有同学能帮我收一下。',
-    priority: 'medium',
-    imageUrl: 'https://picsum.photos/100/100',
-    date: new Date()
-  },
-  {
-    id: 7,
-    title: '丢失我的钱包',
-    tag: '失物招领',
-    tagType: 'primary',
-    content: '我丢失了钱包，希望有同学能帮我找回来。',
-    priority: 'high',
-    imageUrl: 'https://picsum.photos/100/100',
-    date: new Date()
-  },
-  {
-    id: 8,
-    title: '寻找丢失的钱包',
-    tag: '失物招领',
-    tagType: 'primary',
-    content: '我在公园丢失了一个黑色钱失了一个黑色钱包，里面有重要证件和现金。',
-    priority: 'normal',
-    imageUrl: 'https://picsum.photos/100/100',
-    date: new Date()
-  },
-  {
-    id: 9,
-    title: '捡到一只宠物狗',
-    tag: '拾物启事',
-    tagType: 'success',
-    content: '在小区门口捡到一只可爱的宠物狗，希望主人尽快联系我。',
-    priority: 'low',
-    imageUrl: 'https://picsum.photos/100/100',
-    date: new Date()
-  },
-  {
-    id: 10,
-    title: '寻回我的手机',
-    tag: '失物招领',
-    tagType: 'primary',
-    content: '我的手机被偷了，希望有同学能帮我找回来。',
-    priority: 'high',
-    imageUrl: 'https://picsum.photos/100/100',
-    date: new Date()
-  },
-  {
-    id: 11,
-    title: '拾到一堆垃圾',
-    tag: '拾物启事',
-    tagType: 'success',
-    content: '在公园捡到了一堆垃圾，希望有同学能帮我收一下。',
-    priority: 'medium',
-    imageUrl: 'https://picsum.photos/100/100',
-    date: new Date()
-  },
-  {
-    id: 12,
-    title: '丢失我的钱包',
-    tag: '失物招领',
-    tagType: 'primary',
-    content: '我丢失了钱包，希望有同学能帮我找回来。',
-    priority: 'high',
-    imageUrl: 'https://picsum.photos/100/100',
-    date: new Date()
-  },
-  {
-    id: 13,
-    title: '寻回我的手机',
-    tag: '失物招领',
-    tagType: 'primary',
-    content: '我的手机被偷了，希望有同学能帮我找回来。',
-    priority: 'high',
-    imageUrl: 'https://picsum.photos/100/100',
-    date: new Date()
-  },
-  {
-    id: 14,
-    title: '拾到一堆垃圾',
-    tag: '拾物启事',
-    tagType: 'success',
-    content: '在公园捡到了一堆垃圾，希望有同学能帮我收一下。',
-    priority: 'medium',
-    imageUrl: 'https://picsum.photos/100/100',
-    date: new Date()
+
+
+// 新增响应式数据
+const editDialogVisible = ref(false);
+const currentItem = ref({});
+
+
+// 状态映射配置
+const statusTextMap = {
+  0: '待认领',
+  1: '已认领',
+  2: '已关闭'
+};
+
+const statusTypeMap = {
+  0: 'warning',
+  1: 'success',
+  2: 'info'
+};
+
+// 分页参数
+const pagination = ref({
+  page: 1,
+  size: 12
+});
+
+// 搜索参数
+const searchParams = ref({
+  keyword: '',
+  status: ''
+});
+
+
+// 状态标签映射方法
+const getStatusTag = (status) => {
+  return {
+    text: statusTextMap[status] || '未知状态',
+    type: statusTypeMap[status] || 'danger'
+  };
+};
+
+// 数据相关
+const items = ref([]);
+const total = ref(0);
+const loading = ref(false);
+
+// 使用Vite的官方访问方式
+const getImageUrl = (path) => {
+  // console.log('图片路径:', `${import.meta.env.VITE_BASE_URL}${path}`);
+  return `http://localhost/dev-api${path}`;
+};
+
+// 获取数据
+const fetchData = async () => {
+  try {
+    loading.value = true;
+    const res = await lostItemListForCurrentUser();
+    if (res.code === 200) {
+      items.value = res.data.map(item => ({
+        ...item,
+        date: new Date(item.createTime),
+        tag: getStatusTag(item.status).text,
+        tagType: getStatusTag(item.status).type,
+        content: item.description || '暂无详细描述',
+        imageUrl: item.imageUrl // 直接使用后端返回的路径
+      }));
+    }
+  } catch (error) {
+    console.error('数据加载失败:', error);
+    ElMessage.error('数据加载失败');
+  } finally {
+    loading.value = false;
   }
-];
+};
 
+// 分页处理
+const handlePageChange = (page) => {
+  pagination.value.page = page;
+  fetchData();
+};
 
+const handleSizeChange = (size) => {
+  pagination.value.size = size;
+  pagination.value.page = 1;
+  fetchData();
+};
 
-// 计算发布时间
+// 状态筛选变化
+const handleStatusChange = () => {
+  pagination.value.page = 1;
+  fetchData();
+};
+
+// 时间格式化
+const formatDate = (date) => dayjs(date).format('YYYY-MM-DD');
+
+// 相对时间计算
 const timeSince = (date) => {
-  const now = new Date();
-  const diff = now.getTime() - date.getTime();
-  const seconds = Math.floor(diff / 1000);
-  if (seconds < 60) {
-    return `${seconds} 秒前`;
-  } else if (seconds < 3600) {
-    const minutes = Math.floor(seconds / 60);
-    return `${minutes} 分钟前`;
-  } else if (seconds < 86400) {
-    const hours = Math.floor(seconds / 3600);
-    return `${hours} 小时前`;
-  } else {
-    const days = Math.floor(seconds / 86400);
-    return `${days} 天前`;
+  const now = dayjs();
+  const target = dayjs(date);
+  const diff = now.diff(target, 'second');
+
+  if (diff < 60) return `${diff}秒前`;
+  if (diff < 3600) return `${Math.floor(diff / 60)}分钟前`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)}小时前`;
+  return `${Math.floor(diff / 86400)}天前`;
+};
+
+// 文本截断
+const truncateText = (text, maxLength) => {
+  if (!text) return '暂无描述';
+  return text.length > maxLength
+      ? `${text.substring(0, maxLength)}...`
+      : text;
+};
+
+
+const handleEdit = (id) => {
+  const target = items.value.find(item => item.id === id);
+  if (target) {
+    currentItem.value = {
+      ...target,
+      // 转换时间格式（如果后端需要特定格式）
+      lostTime: dayjs(target.lostTime).format('YYYY-MM-DD')
+    };
+    editDialogVisible.value = true;
   }
 };
 
-const toggleExpand = (id) => {
-  expandedContentId.value = expandedContentId.value === id ? null : id;
+// 新增提交处理
+const handleEditSubmit = async (formData) => {
+  try {
+    const { code } = await editLostItem({
+      ...formData,
+      // 转换时间类型（根据后端要求）
+      lostTime: new Date(formData.lostTime).toISOString()
+    });
+    
+    if (code === 200) {
+      ElMessage.success('修改成功');
+      fetchData(); // 刷新数据
+    }
+  } catch (error) {
+    ElMessage.error(error.msg || '修改失败');
+  }
 };
 
-// 搜索条件
-const searchQuery = ref('');
-// 筛选条件
-const selectedTag = ref('');
+// 初始化加载
+onMounted(fetchData);
 
-// 计算过滤后的项目
-const filteredItems = computed(() => {
-  return lostAndFoundItems.filter(item => {
-    // 搜索条件
-    const matchesSearch = item.title.includes(searchQuery.value) || item.content.includes(searchQuery.value);
-    // 筛选条件
-    const matchesTag = selectedTag.value === '' || item.tag === selectedTag.value;
-    // 同时满足搜索和筛选条件
-    return matchesSearch && matchesTag;
-  });
-});
-
-
-// 分页功能
-const currentPage = ref(1);
-const pageSize = 12; // 每页显示的条数
-// 分页后的项目 （使用的时候将<el-row...标签中的filteredItems替换为paginatedItems即可）
-const paginatedItems = computed(() => {
-  const start = (currentPage.value - 1) * pageSize;
-  const end = currentPage.value * pageSize;
-  return filteredItems.value.slice(start, end);
-});
+// 分页后的数据
+const paginatedItems = computed(() => items.value);
 </script>
 
 <style lang="less" scoped>
-@import "./index";
+@import "./index.less";
+
+.lost-and-found-container {
+  padding: 20px;
+
+  .announcement-header {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+
+    .announcement-search {
+      flex: 1;
+    }
+
+    .announcement-select {
+      width: 150px;
+    }
+  }
+
+  .announcement-card {
+    margin-bottom: 20px;
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+
+      .item-id {
+        background-color: #f5f7fa;
+        color: #909399;
+      }
+    }
+
+    .item-title {
+      margin: 0 0 12px;
+      font-size: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .lost-time {
+        font-size: 12px;
+        color: #909399;
+
+        .el-icon-time {
+          margin-right: 4px;
+        }
+      }
+    }
+
+    .item-content {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 12px;
+
+      .item-image {
+        width: 100px;
+        height: 100px;
+        border-radius: 4px;
+        flex-shrink: 0;
+      }
+
+      .item-desc {
+        flex: 1;
+        color: #606266;
+        line-height: 1.5;
+      }
+    }
+
+    .item-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #909399;
+
+      .meta-info {
+        display: flex;
+        gap: 15px;
+
+        .location {
+          .el-icon-location-outline {
+            margin-right: 4px;
+          }
+        }
+      }
+
+      .item-actions {
+        button {
+          padding: 6px 12px;
+        }
+      }
+    }
+  }
+
+  .el-pagination {
+    margin-top: 20px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .lost-and-found-container {
+    padding: 10px;
+
+    .announcement-header {
+      flex-direction: column;
+
+      .announcement-select {
+        width: 100%;
+      }
+    }
+
+    .item-content {
+      flex-direction: column;
+
+      .item-image {
+        width: 100% !important;
+        height: 150px !important;
+      }
+    }
+
+    .item-footer {
+      flex-direction: column;
+      align-items: flex-start !important;
+      gap: 8px;
+    }
+  }
+}
 </style>
