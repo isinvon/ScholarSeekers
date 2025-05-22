@@ -242,6 +242,41 @@ public class HomeUserServiceImpl extends ServiceImpl<HomeUserMapper, User> imple
             wrapper.set(User::getIntroduction, user.getIntroduction());
         }
 
+        if (StringUtils.isNotBlank(user.getEmail())) {
+            wrapper.set(User::getEmail, user.getEmail());
+        }
+
+        if (StringUtils.isNotBlank(user.getPhone())) {
+            wrapper.set(User::getPhone, user.getPhone());
+        }
+
+        if (user.getGrade() != null) {
+            wrapper.set(User::getGrade, user.getGrade());
+        }
+
+        // birthday
+        if (user.getBirthday() != null) {
+            wrapper.set(User::getBirthday, user.getBirthday());
+        }
+
+        // college
+        if (StringUtils.isNotBlank(user.getCollege())) {
+            wrapper.set(User::getCollege, user.getCollege());
+        }
+
+        if (StringUtils.isNotBlank(user.getAddress())) {
+            wrapper.set(User::getAddress, user.getAddress());
+        }
+
+        if (StringUtils.isNotBlank(user.getTag())) {
+            wrapper.set(User::getTag, user.getTag());
+        }
+
+        // introduction
+        if (StringUtils.isNotBlank(user.getIntroduction())) {
+            wrapper.set(User::getIntroduction, user.getIntroduction());
+        }
+
         // 执行更新
         return homeUserMapper.update(null, wrapper) > 0;
     }
