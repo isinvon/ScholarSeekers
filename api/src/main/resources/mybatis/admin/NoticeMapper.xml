@@ -10,12 +10,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="content"    column="content"    />
         <result property="type"    column="type"    />
         <result property="createTime"    column="create_time"    />
-        <result property="upateTime"    column="upate_time"    />
+        <result property="updateTime"    column="update_time"    />
         <result property="isDeleted"    column="is_deleted"    />
     </resultMap>
 
     <sql id="selectNoticeVo">
-        select id, user_id, content, type, create_time, upate_time, is_deleted from ss_notice
+        select id, user_id, content, type, create_time, update_time, is_deleted from ss_notice
     </sql>
 
     <select id="selectNoticeList" parameterType="Notice" resultMap="NoticeResult">
@@ -39,7 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="content != null and content != ''">content,</if>
             <if test="type != null">type,</if>
             <if test="createTime != null">create_time,</if>
-            <if test="upateTime != null">upate_time,</if>
+            <if test="updateTime != null">update_time,</if>
             <if test="isDeleted != null">is_deleted,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="content != null and content != ''">#{content},</if>
             <if test="type != null">#{type},</if>
             <if test="createTime != null">#{createTime},</if>
-            <if test="upateTime != null">#{upateTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
             <if test="isDeleted != null">#{isDeleted},</if>
          </trim>
     </insert>
@@ -59,7 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="content != null and content != ''">content = #{content},</if>
             <if test="type != null">type = #{type},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
-            <if test="upateTime != null">upate_time = #{upateTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
         </trim>
         where id = #{id}

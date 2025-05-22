@@ -12,7 +12,7 @@ import {
 export const sideMenu = [
     {id: 1, title: '首页', icon: HomeIcon, path: '/home'},
     {id: 2, title: '最新失物', icon: SearchIcon, path: '/latestLost'},
-    {id: 3, title: '分类预览', icon: FilesIcon, path: '/categoryPreview'},
+    // {id: 3, title: '分类预览', icon: FilesIcon, path: '/categoryPreview'},
     {id: 4, title: '已认领', icon: CheckIcon, path: '/alreadyClaimed'},
     {id: 5, title: '所有发布记录', icon: RecordIcon, path: '/allReleaseRecord'},
     {id: 6, title: '个人中心', icon: UserIcon, path: '/personalCenter'},

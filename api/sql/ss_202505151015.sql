@@ -305,7 +305,7 @@ create table if not exists ss_notice
     content     text                 not null comment '通知内容',
     type        int                  not null comment '通知类型',
     create_time datetime             not null comment '创建时间',
-    upate_time  datetime             not null comment '更新时间',
+    update_time  datetime             not null comment '更新时间',
     is_deleted  tinyint(1) default 0 not null comment '是否已删除'
 )
     comment '通知表';

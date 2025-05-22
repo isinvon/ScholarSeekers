@@ -1,261 +1,4 @@
 <!--通知公告-->
-
-<!--第一版 - 原始风格-->
-<!--<template>-->
-<!--  <el-card class="announcement-board" shadow="hover">-->
-<!--    <template #header>-->
-<!--      <div class="announcement-header">-->
-<!--        <i class="el-icon-bell"></i>-->
-<!--        <span>公告栏</span>-->
-<!--      </div>-->
-<!--    </template>-->
-<!--    <el-timeline>-->
-<!--      <el-timeline-item-->
-<!--          v-for="item in items"-->
-<!--          :key="item.id"-->
-<!--          :timestamp="item.date"-->
-<!--          placement="top"-->
-<!--          hide-timestamp-->
-<!--      >-->
-<!--        <el-card class="announcement-card" shadow="always">-->
-<!--          <div class="announcement-content">-->
-<!--            <h4>{{ item.title }}</h4>-->
-<!--            <p>{{ item.content }}</p>-->
-<!--            <small>{{ item.date }}</small>-->
-<!--          </div>-->
-<!--        </el-card>-->
-<!--      </el-timeline-item>-->
-<!--    </el-timeline>-->
-<!--  </el-card>-->
-<!--</template>-->
-
-<!--<script setup>-->
-<!--import { ref } from 'vue'-->
-
-<!--const items = ref([-->
-<!--  { id: 1, date: '2024-05-15', title: '公告标题 1', content: '这里是公告内容 1...' },-->
-<!--  { id: 2, date: '2024-05-14', title: '公告标题 2', content: '这里是公告内容 2...' },-->
-<!--  // 更多公告...-->
-<!--])-->
-<!--</script>-->
-
-<!--<style scoped>-->
-<!--.announcement-board {-->
-<!--  margin: 30px;-->
-<!--  padding: 20px;-->
-<!--  border-radius: 10px;-->
-<!--  background-color: #f9f9f9;-->
-<!--  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);-->
-<!--}-->
-
-<!--.announcement-header {-->
-<!--  display: flex;-->
-<!--  align-items: center;-->
-<!--  font-size: 18px;-->
-<!--  font-weight: bold;-->
-<!--}-->
-
-<!--.announcement-header .el-icon-bell {-->
-<!--  margin-right: 10px;-->
-<!--  color: #ff5e2b;-->
-<!--}-->
-
-<!--.el-timeline-item {-->
-<!--  margin-bottom: 20px;-->
-<!--}-->
-
-
-<!--.el-timeline-item:before {-->
-<!--  background-color: #ff5e2b; /* 时间线的颜色 */-->
-<!--}-->
-
-<!--.el-timeline-item__node {-->
-<!--  background-color: #ff5e2b;-->
-<!--}-->
-
-
-<!--.announcement-card {-->
-<!--  border-radius: 8px;-->
-<!--  padding: 15px;-->
-<!--  background-color: #fff;-->
-<!--}-->
-
-<!--.announcement-content h4 {-->
-<!--  margin: 0;-->
-<!--  font-size: 18px;-->
-<!--  color: #333;-->
-<!--}-->
-
-<!--.announcement-content p {-->
-<!--  margin: 10px 0;-->
-<!--  font-size: 16px;-->
-<!--  color: #666;-->
-<!--}-->
-
-<!--.announcement-content small {-->
-<!--  font-size: 12px;-->
-<!--  color: #999;-->
-<!--  display: block;-->
-<!--  margin-top: 10px;-->
-<!--}-->
-
-<!--</style>-->
-
-
-<!--第二版 -  简洁风格-->
-
-
-<!--<template>-->
-<!--  <el-card class="announcement-board" shadow="hover">-->
-<!--    <template #header>-->
-<!--      <div class="announcement-header">-->
-<!--        <i class="el-icon-bell"></i>-->
-<!--        <span>公告栏</span>-->
-<!--        &lt;!&ndash; 搜索框 &ndash;&gt;-->
-<!--        <el-input v-model="searchTerm" placeholder="搜索公告..." class="announcement-search" clearable />-->
-<!--      </div>-->
-<!--    </template>-->
-<!--    <el-timeline>-->
-<!--      <el-timeline-item-->
-<!--          v-for="item in filteredItems"-->
-<!--          :key="item.id"-->
-<!--          :timestamp="item.date"-->
-<!--          placement="top"-->
-<!--          hide-timestamp-->
-<!--      >-->
-<!--        <el-card class="announcement-card" shadow="always">-->
-<!--          <div class="announcement-content">-->
-<!--            <div class="announcement-header">-->
-<!--              <el-avatar src="https://www.example.com/avatar.png" />-->
-<!--              <el-tag :type="item.tagType" class="announcement-tag">{{ item.tag }}</el-tag>-->
-<!--            </div>-->
-<!--            <h4>{{ item.title }}</h4>-->
-<!--            <p v-if="expandedId === item.id">{{ item.content }}</p>-->
-<!--            <p v-else>{{ item.content.substring(0, 50) }}...</p>-->
-<!--            <small>{{ item.date }}</small>-->
-<!--            <el-button type="text" @click="toggleExpand(item.id)">-->
-<!--              {{ expandedId === item.id ? '收起' : '展开' }}-->
-<!--            </el-button>-->
-<!--          </div>-->
-<!--        </el-card>-->
-<!--      </el-timeline-item>-->
-<!--    </el-timeline>-->
-<!--  </el-card>-->
-<!--</template>-->
-
-<!--<script setup>-->
-<!--import { ref, computed } from 'vue'-->
-
-<!--const items = ref([-->
-<!--  { id: 1, date: '2024-05-15', title: '公告标题 1', content: '这里是公告内容 1...', tag: '紧急', tagType: 'danger' },-->
-<!--  { id: 2, date: '2024-05-14', title: '公告标题 2', content: '这里是公告内容 2...', tag: '通知', tagType: 'success' },-->
-<!--  // 更多公告...-->
-<!--])-->
-
-<!--// 搜索功能-->
-<!--const searchTerm = ref('')-->
-<!--const filteredItems = computed(() =>-->
-<!--    items.value.filter(item => item.title.includes(searchTerm.value) || item.content.includes(searchTerm.value))-->
-<!--)-->
-
-<!--// 展开/折叠功能-->
-<!--const expandedId = ref(null)-->
-<!--const toggleExpand = (id) => {-->
-<!--  expandedId.value = expandedId.value === id ? null : id-->
-<!--}-->
-<!--</script>-->
-
-<!--<style scoped>-->
-<!--.announcement-board {-->
-<!--  margin: 30px;-->
-<!--  padding: 20px;-->
-<!--  border-radius: 10px;-->
-<!--  background-color: #f9f9f9;-->
-<!--  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);-->
-<!--}-->
-
-<!--.announcement-header {-->
-<!--  display: flex;-->
-<!--  justify-content: space-between;-->
-<!--  align-items: center;-->
-<!--  font-size: 18px;-->
-<!--  font-weight: bold;-->
-<!--}-->
-
-<!--.announcement-header .el-icon-bell {-->
-<!--  margin-right: 10px;-->
-<!--  color: #ff5e2b;-->
-<!--}-->
-
-<!--.announcement-search {-->
-<!--  max-width: 300px;-->
-<!--}-->
-
-<!--.el-timeline-item {-->
-<!--  margin-bottom: 20px;-->
-<!--}-->
-
-<!--.announcement-card {-->
-<!--  border-radius: 8px;-->
-<!--  padding: 15px;-->
-<!--  background-color: #fff;-->
-<!--  transition: all 0.3s ease-in-out;-->
-<!--}-->
-
-<!--.announcement-card:hover {-->
-<!--  transform: translateY(-5px);-->
-<!--}-->
-
-<!--.announcement-content {-->
-<!--  display: flex;-->
-<!--  flex-direction: column;-->
-<!--}-->
-
-<!--.announcement-header {-->
-<!--  display: flex;-->
-<!--  align-items: center;-->
-<!--  margin-bottom: 10px;-->
-<!--}-->
-
-<!--.announcement-header .el-avatar {-->
-<!--  margin-right: 10px;-->
-<!--}-->
-
-<!--.announcement-tag {-->
-<!--  margin-left: auto;-->
-<!--}-->
-
-<!--.announcement-content h4 {-->
-<!--  margin: 0;-->
-<!--  font-size: 18px;-->
-<!--  color: #333;-->
-<!--}-->
-
-<!--.announcement-content p {-->
-<!--  margin: 10px 0;-->
-<!--  font-size: 16px;-->
-<!--  color: #666;-->
-<!--}-->
-
-<!--.announcement-content small {-->
-<!--  font-size: 12px;-->
-<!--  color: #999;-->
-<!--  display: block;-->
-<!--  margin-top: 10px;-->
-<!--}-->
-
-<!--.el-timeline-item:before {-->
-<!--  background-color: #ff5e2b; /* 时间线的颜色 */-->
-<!--}-->
-
-<!--.el-timeline-item__node {-->
-<!--  background-color: #ff5e2b;-->
-<!--}-->
-<!--</style>-->
-
-
-<!--第三版-->
-
 <template>
   <el-card class="announcement-board" shadow="hover">
     <template #header>
@@ -269,10 +12,8 @@
         <span class="announcement-title"> 📢 公告栏</span>
         <!--隔离带-->
         <div style="flex-grow: 0.4;"/>
-        <!-- 搜索框 - 版本一 -->
-        <!--<el-input v-model="searchTerm" placeholder="搜索公告..." class="announcement-search" clearable/>-->
         <!--搜索框 - 版本二-->
-        <SearchBox class="announcement-search"  v-model="searchTerm" placeholder="搜索公告..." :border-radius="12"/>
+        <SearchBox class="announcement-search" v-model="searchTerm" placeholder="搜索公告..." :border-radius="12"/>
         <!--隔离带-->
         <div style="flex-grow: 0.4;"/>
         <!--选择日期排序-->
@@ -301,7 +42,7 @@
             <p v-else>{{ item.content.substring(0, 50) }}...</p>
             <small>{{ timeSince(item.date) }}</small>
             <!--分割线-->
-            <el-divider direction="vertical" />
+            <el-divider direction="vertical"/>
             <el-button type="text" @click="toggleExpand(item.id)">
               {{ expandedId === item.id ? '收起' : '展开' }}
             </el-button>
@@ -321,17 +62,19 @@
 </template>
 
 <script lang="js" setup>
-import {ref, computed} from 'vue'
+import {computed, onMounted, ref} from 'vue'
 import {Back} from "@element-plus/icons-vue";
 import RouteUtils from "@/utils/RouteUtils";
 import SearchBox from "@/components/SearchBox/index.vue";
+import NotificationAnnouncement from "@/api/notificationAnnouncement";
 
+// 对接后的数据相关逻辑
+const items = ref([])
+const loading = ref(false)
 // 搜索功能
 const searchTerm = ref('')
-
 // 排序功能 (默认日期降序)
 const sortByDate = ref(false);
-
 //  颜色定义
 const color = {
   urgent: '#f56d6d',
@@ -340,71 +83,6 @@ const color = {
   low: '#808080',
   solved: '#67c23a'
 }
-
-const items = ref([
-  {
-    id: 1,
-    date: '2024-05-15',
-    title: '公告标题 1',
-    content: '这里是公告内这7里是公告内这里是公告内这里是公告内这里是公告内这里是公告内这里是公告内这里是公告内这里是公告内这里是公告内这里是公告内这里是公告内这里是公告内这里是公告内这里是公告内这里是公告内这里是公告内这里是公告内这里是公告内这里是公告内容 1',
-    tag: '紧急',
-    tagType: 'danger',
-    avatar: 'https://www.example.com/avatar1.png',
-    priority: 'urgent'
-  },
-  {
-    id: 2,
-    date: '2024-05-14',
-    title: '公告标题 2',
-    content: '这里是公告内容 2',
-    tag: '通知',
-    tagType: 'primary',
-    avatar: 'https://www.example.com/avatar2.png',
-    priority: 'medium'
-  },
-  {
-    id: 3,
-    date: '2024-05-13',
-    title: '公告标题 3',
-    content: '这里是公7告内容 3',
-    tag: '普通',
-    tagType: 'info',
-    avatar: 'https://www.example.com/avatar3.png',
-    priority: 'solved'
-  },
-  {
-    id: 4,
-    date: '2024-05-12',
-    title: '公告标题 4',
-    content: '这里是公告内容 4',
-    tag: '普通',
-    tagType: 'info',
-    avatar: 'https://www.example.com/avatar4.png',
-    priority: 'low'
-  },
-  {
-    id: 5,
-    date: '2024-05-11',
-    title: '公告标题 5',
-    content: '这里是公告内容 5',
-    tag: '已解决',
-    tagType: 'success',
-    avatar: 'https://www.example.com/avatar5.png',
-    priority: 'solved'
-  },
-  {
-    id: 6,
-    date: '2024-05-09',
-    title: '公告标题 5',
-    content: '这里是公告内容 5',
-    tag: '已解决',
-    tagType: 'success',
-    avatar: 'https://www.example.com/avatar5.png',
-    priority: 'solved'
-  },
-
-  // 更多公告...
-])
 
 // 按搜索框内容搜索
 // const filteredItems = computed(() =>
@@ -431,7 +109,8 @@ const timeSince = (dateString) => {
   const now = new Date()
   const diff = Math.abs(now - date)
   const days = Math.floor(diff / (1000 * 60 * 60 * 24))
-  return days > 0 ? `发布于 ${days} 天前` : '今天发布'
+  const hours = Math.floor(diff / (1000 * 60 * 60))
+  return days > 0 ? `发布于 ${days} 天前` : hours > 0 ? `发布于 ${hours} 小时前` : '刚刚发布'
 }
 
 // 分页功能
@@ -482,6 +161,70 @@ const cardStyle = (priority) => {
 }
 
 
+// 获取通知数据
+const fetchNotifications = async () => {
+  try {
+    loading.value = true
+    const res = await NotificationAnnouncement.list({})
+    if (res.code === 200) {
+      items.value = res.data.map(item => ({
+        id: item.id,
+        date: item.updateTime, // 使用更新时间
+        title: getTitleByType(item.type), // 根据类型生成标题
+        content: item.content,
+        tag: getTagText(item.type),
+        tagType: getTagType(item.type),
+        priority: getPriority(item.type)
+      }))
+    }
+  } catch (error) {
+    console.error('获取通知失败:', error)
+  } finally {
+    loading.value = false
+  }
+}
+
+// 类型映射方法
+const getTagText = (type) => {
+  const map = {
+    0: '普通',
+    1: '紧急',
+    2: '已解决'
+  }
+  return map[type] || '通知'
+}
+
+const getTagType = (type) => {
+  const map = {
+    0: 'primary',
+    1: 'danger',
+    2: 'success'
+  }
+  return map[type] || 'info'
+}
+
+const getPriority = (type) => {
+  const map = {
+    0: 'medium',
+    1: 'urgent',
+    2: 'solved'
+  }
+  return map[type] || 'low'
+}
+
+const getTitleByType = (type) => {
+  const prefixMap = {
+    0: '系统通知',
+    1: '紧急通知',
+    2: '已解决通知'
+  }
+  return `${prefixMap[type] || '通知'} ${new Date().toLocaleDateString()}`
+}
+
+
+// 初始化获取数据
+onMounted(fetchNotifications)
+
 </script>
 
 <style lang="less" scoped>
@@ -525,7 +268,7 @@ const cardStyle = (priority) => {
   .title:hover {
     color: #896e9b;
     transform: translateX(5px); // 移动5像素
-    cursor: pointer;// 变成鼠标手
+    cursor: pointer; // 变成鼠标手
   }
 }
 

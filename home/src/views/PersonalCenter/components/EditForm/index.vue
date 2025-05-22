@@ -184,42 +184,96 @@ const handleCancel = () => {
 
 onMounted(loadUserData);
 </script>
+
 <style lang="less" scoped>
+@primary-color: #409eff;
+@hover-color: #66b1ff;
+@background: #f8fafc;
+@border-color: #e4e7ed;
+
 .edit-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+
   .form-section {
-    margin-bottom: 35px;
-    padding: 25px;
-    background: #f8fafc;
-    border: 1px solid #e4e7ed;
-    border-radius: 8px;
-    transition: all 0.3s ease;
+    margin-bottom: 32px;
+    padding: 28px;
+    background: @background;
+    border: 1px solid @border-color;
+    border-radius: 10px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
     &:hover {
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
     }
 
     h3 {
-      font-size: 17px;
-      color: #303133;
-      margin-bottom: 25px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #ebeef5;
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 28px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #ebedf0;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 40px;
+        height: 2px;
+        background: @primary-color;
+      }
+    }
+
+    .el-form-item {
+      margin-bottom: 22px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &__label {
+        font-size: 14px;
+        color: #606266;
+        padding-bottom: 6px;
+        font-weight: 500;
+      }
     }
   }
 
   .form-actions {
     display: flex;
     justify-content: flex-end;
-    gap: 15px;
+    gap: 16px;
     margin-top: 40px;
-    padding-top: 25px;
+    padding-top: 32px;
     border-top: 1px solid #ebeef5;
 
     .el-button {
-      width: 120px;
-      height: 38px;
-      border-radius: 6px;
-      transition: all 0.2s ease;
+      min-width: 120px;
+      height: 42px;
+      border-radius: 8px;
+      transition: all 0.25s ease;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+
+      &--primary {
+        background: @primary-color;
+        border-color: @primary-color;
+
+        &:hover {
+          background: @hover-color;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(64, 158, 255, 0.3);
+        }
+      }
 
       &:active {
         transform: scale(0.98);
@@ -227,30 +281,99 @@ onMounted(loadUserData);
     }
   }
 
-  /* 增强输入框样式 */
-
+  // 输入框增强样式
   :deep(.el-input) {
     &__inner {
-      border-radius: 6px;
-      padding: 10px 15px;
-      transition: border-color 0.2s ease;
+      height: 42px;
+      border-radius: 8px;
+      padding: 0 16px;
+      font-size: 14px;
+      transition: all 0.2s ease;
+
+      &::placeholder {
+        color: #c0c4cc;
+      }
 
       &:focus {
-        border-color: #409eff;
-        box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.1);
+        border-color: @primary-color;
+        box-shadow: 0 0 0 3px rgba(64, 158, 255, 0.15);
+      }
+    }
+
+    &__count {
+      bottom: -22px;
+      right: 0;
+    }
+  }
+
+  // 单选组样式优化
+  :deep(.el-radio-group) {
+    display: flex;
+    gap: 24px;
+
+    .el-radio {
+      margin: 0;
+      --el-radio-input-border-color-hover: @primary-color;
+
+      &__label {
+        font-size: 14px;
+        padding-left: 8px;
+      }
+
+      &.is-checked {
+        .el-radio__inner {
+          border-color: @primary-color;
+          background: @primary-color;
+        }
       }
     }
   }
 
-  /* 单选组样式优化 */
+  // 文本域样式优化
+  :deep(.el-textarea) {
+    &__inner {
+      min-height: 100px;
+      padding: 12px 16px;
+      line-height: 1.6;
+      border-radius: 8px;
+      resize: vertical;
 
-  :deep(.el-radio-group) {
-    .el-radio {
-      margin-right: 25px;
-
-      &__label {
-        font-size: 14px;
+      &:focus {
+        border-color: @primary-color;
+        box-shadow: 0 0 0 3px rgba(64, 158, 255, 0.15);
       }
+    }
+
+    &__count {
+      bottom: -24px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 24px;
+
+    .form-section {
+      padding: 20px;
+      margin-bottom: 24px;
+
+      h3 {
+        font-size: 16px;
+        margin-bottom: 20px;
+      }
+    }
+
+    .form-actions {
+      flex-direction: column;
+      gap: 12px;
+
+      .el-button {
+        width: 100%;
+      }
+    }
+
+    :deep(.el-radio-group) {
+      flex-direction: column;
+      gap: 12px;
     }
   }
 }
